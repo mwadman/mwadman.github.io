@@ -16,7 +16,9 @@ sidebar-avatar: /img/favicon.png # Use an absolute URL, seeing it's used in both
 
 
 # SNS settings
-RSS: false
+RSS: true
+
+# Social Media
 github_username: mwadman
 # facebook_username: example
 # twitter_username: example
