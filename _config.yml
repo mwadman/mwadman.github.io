@@ -44,7 +44,7 @@ highlighter: rouge
 kramdown:
   input: GFM  # Use Github Flavored Markdown
 
-# Social Media
+# Comments
 ## Gitalk
 gitalk:
   enable: false #Enables Gitalk Comments
@@ -63,15 +63,3 @@ featured-condition-size: 1 # Threshold for tags appearing
 # Progressive Web Apps
 chrome-tab-theme-color: "#000000"
 service-worker: true
-
-
-# Friends
-friends: [
-    {
-        title: "Example",
-        href: "http://example.com"
-    },{
-        title: "Example 2",
-        href: "https://example2.com"
-    }
-]
