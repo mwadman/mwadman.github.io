@@ -139,14 +139,19 @@
     }
 </script>
 
-<!--fastClick.js -->
+<!--
+     fastClick.js is no longer required for mobile device viewing
+
+     - https://stackoverflow.com/questions/42250283/is-fastclick-js-still-needed
+-->
+<!--fastClick.js
 <script>
     async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
         if($nav) FastClick.attach($nav);
     })
 </script>
-
+-->
 
 <!-- Side Catalog -->
 {% if page.catalog %}
