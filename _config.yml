@@ -7,7 +7,7 @@ description: "My thoughts and experiences with all things network"
 keyword: "Michael Wadman, Network, Network Engineering"
 url: "https://mwadman.github.io" # Your host, for absolute URL
 baseurl: "" # For example, '/blog' if your blog hosted on 'host/blog'
-github_repo: "https://github.com/mwadman/mwadman.github.io.git"
+theme_github_repo: "https://github.com/mwadman/mwadman.github.io.git"
 
 # Sidebar settings
 sidebar: False # Whether or not using Sidebar. TODO: Change this?
@@ -17,11 +17,8 @@ sidebar-avatar: /img/favicon.png # Use an absolute URL, seeing it's used in both
 
 # SNS settings
 RSS: false
-# weibo_username: example
-# zhihu_username: example
 github_username: mwadman
 # facebook_username: example
-# jianshu_username: example
 # twitter_username: example
 
 
@@ -46,9 +43,6 @@ kramdown:
   input: GFM  # Use Github Flavored Markdown
 
 # Social Media
-## Disqus（https://disqus.com/）
-# disqus_username:
-
 ## Gitalk
 gitalk:
   enable: false #Enables Gitalk Comments
@@ -58,16 +52,6 @@ gitalk:
   owner: mwadman    # Github Username
   admin: mwadman
   distractionFreeMode: true # Enables Shadow Mask like Facebook
-
-
-# Analytics settings
-## Baidu Analytics
-ba_track_id:
-
-## Google Analytics
-ga_track_id: '' # Format: 'UA-xxxxxx-xx'
-ga_domain:  # Default is 'auto'
-
 
 # Featured Tags
 featured-tags: false # Shows features tags on the front page
