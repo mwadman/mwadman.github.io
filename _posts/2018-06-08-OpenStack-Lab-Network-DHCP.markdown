@@ -107,9 +107,7 @@ Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.4.0-116-generic x86_64)
  * Management:     https://landscape.canonical.com
  * Support:        https://ubuntu.com/advantage
 Last login: Sat Jul 28 00:54:32 2018 from 192.168.11.100
-vagrant@vagrant:~$ exit  
-logout  
-Connection to 192.168.11.221 closed.
+vagrant@vagrant:~$ exit
 ```
 
 ## Installing Ansible
@@ -168,7 +166,7 @@ pipelining = True # Uses the same SSH session for multiple tasks on the same hos
 
 In the hosts file, we're going to wipe everything already present and create the entries for all of our guests in the OpenStack lab now, so that we don't need to come back and touch this file again:
 
-```ini
+```config
 #################
 # OpenStack Lab #
 #################
@@ -183,6 +181,7 @@ ansible_user=vagrant
 ansible_ssh_pass=vagrant
 
 # Cumulus Switches
+
 [openstack_cumulus:children]
 openstack_cumulus_spines
 openstack_cumulus_leafs
@@ -198,10 +197,12 @@ cumulus-leaf03 ansible_host=192.168.11.213
 cumulus-leaf04 ansible_host=192.168.11.214
 
 # ZTP Server
+
 [openstack_ztp]
 cumulus-ztp ansible_host=192.168.11.221
 
 # OpenStack Hosts
+
 [openstack_hosts]
 openstack-control ansible_host=192.168.11.231
 openstack-compute ansible_host=192.168.11.232
@@ -298,6 +299,7 @@ option dhcp6.domain-search "vm";
 option domain-name-servers 192.168.20.11, 192.168.20.10;
 
 # Generated automatically by Ansible
+
 subnet 192.168.11.0 netmask 255.255.255.0 {
         option routers 192.168.11.1;
 }
@@ -400,9 +402,11 @@ option dhcp6.domain-search "vm";
 option domain-name-servers 192.168.20.11, 192.168.20.10;
 
 # Configuration options
+
 cumulus-provision-url code 239 = text;
 
 # Generated automatically by Ansible
+
 subnet 192.168.11.0 netmask 255.255.255.0 {
         option routers 192.168.11.1;
 }
