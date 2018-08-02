@@ -31,7 +31,7 @@ I've set up GNS3 with the topology above and have given the routers serial links
 
 For addressing I've gone with a /24 between each device in the format 192.168.x.y/24, where x is the interface number and y is the router number. So R1's address on the interface to R2 would be 192.168.1.1/24:
 
-```conf
+```
 R1(config)#interface serial 2/0
 R1(config-if)#no shut
 R1(config-if)#ip address 192.168.0.1 255.255.255.0
@@ -42,7 +42,7 @@ R1(config-if)#ip address 192.168.1.1 255.255.255.0
 
 Next we'll configure BGP on each of the devices. Don't forget to configure <span style="text-decoration: underline;">next-hop-self</span> on the routers we control otherwise we won't be able to reach the routes that are re-advertised by our routers. I've again shown the configuration of R1:
 
-```conf
+```
 R1(config)#router bgp 100
 R1(config-router)#neighbor 192.168.1.2 remote-as 100
 R1(config-router)#neighbor 192.168.1.2 next-hop-self
@@ -74,7 +74,7 @@ Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State
 
 Next we will advertise the default route from R3 and R4. Configuration of R3 below:
 
-```conf
+```
 R3(config)#router bgp 200
 R3(config-router)#neighbor 192.168.0.1 default-originate
 ```
@@ -117,7 +117,7 @@ Now that we have everything set up, lets attempt to use AS200 as the preferred p
 
 As we already know this is the case on R1, we simply need to change the administrative distance on R2 for routes received from R1. We can do this by using the command <span style="text-decoration: underline;"><span class="lang:sh decode:true crayon-inline ">distance 19 192.168.1.1 0.0.0.0</span></span> which sets all routes received from the neighbour 192.168.1.1 with an AD of 19 (and therefore better than the eBGP AD of 20)
 
-```conf
+```
 R2(config)#router bgp 100
 R2(config-router)#distance 19 192.168.1.1 0.0.0.0
 ```
@@ -181,7 +181,7 @@ Here we can see that the local preference of both routes received is 100 (lines 
 
 In order to make the local preference for one of our routes higher than the other (a higher number is preferred with local preference), we would apply a route-map to the neighbor we want to change. For this problem I'll set the local preference of the peering to AS200 higher than 100 to prefer this over all other peers.
 
-```conf
+```
 R1(config)#route-map set-lp-120
 R1(config-route-map)#set local-preference 120
 R1(config-route-map)#exit
