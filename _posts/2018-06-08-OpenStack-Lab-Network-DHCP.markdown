@@ -18,7 +18,7 @@ tags:
 
 This post is the third in a series that plans to document my progress through installing and configuring a OpenStack Lab, using Cumulus switches for the network.
 
-For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/openstack-lab-introduction/).
+For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
 In the last post, we covered how to provision the switches and servers using Vagrant.
 This post will cover the installation of the DHCP part on the ZTP server using Ansible.
@@ -26,7 +26,7 @@ This post will cover the installation of the DHCP part on the ZTP server using A
 # Setup
 
 The first thing we need to do before we can configure the ZTP server is give it an IP address.
-Usually this would be handled by Vagrant, but like [I covered in the last post](https://wadman.co.nz/2018/04/08/openstack-lab-vagrant/#Networking), this isn't possible when we set the first interface to be bridged.
+Usually this would be handled by Vagrant, but like [I covered in the last post](https://wadman.co.nz/2018/04/08/OpenStack-Lab-Network-Vagrant/#networking), this isn't possible when we set the first interface to be bridged.
 
 To do this we need to boot the machine, using the following command:
 

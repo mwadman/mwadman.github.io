@@ -17,16 +17,15 @@ tags:
     - VirtualBox
 ---
 
-
 # Overview
 
 This post is the first in a series that plans to document my progress through installing and configuring a OpenStack Lab, focusing primarily on the configuration of the network.
 
 The series will roughly look like the following:
-1. [Setup VirtualBox and virtual machines using Vagrant.](https://www.wadman.co.nz/openstack-lab-vagrant/)
+1. [Setup VirtualBox and virtual machines using Vagrant.](https://wadman.co.nz/2018/04/08/OpenStack-Lab-Network-Vagrant/)
 2. Install and configure ZTP server and boot switches.
-  * [Part 1 - DHCP](https://wadman.co.nz/2018/04/08/openstack-lab-ztp-server-part-1/)
-  * [Part 2 - HTTP](http://openstack-lab-network-ztp-server-part-2)
+  * [Part 1 - DHCP](https://wadman.co.nz/2018/06/08/OpenStack-Lab-Network-DHCP/)
+  * [Part 2 - HTTP](http://wadman.co.nz/2018/08/03/OpenStack-Lab-Network-HTTP/)
 3. Configure network underlay (eBGP) using Ansible
 4. Configure network overlay (VXLAN with EVPN) using Ansible.
 5. Initial deployment of OpenStack servers using OpenStack-Ansible
@@ -77,4 +76,4 @@ I'll go over the more specific choices when we get around to configuring the swi
 
 This was just a quick post, meant as a foundation for the rest of the series and for me to document before I start configuring anything.
 
-The [next post](https://www.wadman.co.nz/openstack-lab-vagrant/) in the series covers the use Vagrant to set up the environment in VirtualBox.
+The [next post](https://wadman.co.nz/2018/04/08/OpenStack-Lab-Network-Vagrant/) in the series covers the use Vagrant to set up the environment in VirtualBox.

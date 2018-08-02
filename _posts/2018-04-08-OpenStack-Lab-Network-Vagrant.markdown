@@ -17,7 +17,7 @@ tags:
 
 This post is the second in a series that plans to document my progress through installing and configuring a OpenStack Lab, using Cumulus switches for the network.
 
-For other posts in this series, see the [Overview section in the introduction post](https://www.wadman.co.nz/openstack-lab-introduction/).
+For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
 This post will cover the creation of our Virtual Machines in VirtualBox using Vagrant.  
 Vagrant (by HashiCorp) can be described as a tool to spin up reproducible development environments using most mainstream hypervisors.
