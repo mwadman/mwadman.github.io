@@ -37,12 +37,14 @@ gems: [jekyll-paginate]
 
 
 # Markdown settings
-# Documentation: http://jekyllrb.com/docs/configuration/#kramdown
+## Documentation: http://jekyllrb.com/docs/configuration/#kramdown
 markdown: kramdown
-# Since 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
-highlighter: rouge
 kramdown:
   input: GFM  # Use Github Flavored Markdown
+
+# Since 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
+## Languages supported can be found at https://github.com/jneen/rouge/wiki/List-of-supported-languages-and-lexers
+highlighter: rouge
 
 # Comments
 ## Gitalk
