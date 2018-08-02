@@ -7,7 +7,7 @@ description: "My thoughts and experiences with all things network"
 keyword: "Michael Wadman, Network, Network Engineering"
 url: "https://mwadman.github.io" # Your host, for absolute URL
 baseurl: "" # For example, '/blog' if your blog hosted on 'host/blog'
-theme_github_repo: "https://github.com/qiubaiying/qiubaiying.github.io"
+theme_github_repo: "https://github.com/qiubaiying/qiubaiying.github.io" # Also look at https://github.com/Huxpro/huxpro.github.io
 
 # Sidebar settings
 sidebar: False # Whether or not using Sidebar. TODO: Change this?
