@@ -168,7 +168,9 @@ In the hosts file, we're going to wipe everything already present and create the
 
 ```config
 #################
+
 # OpenStack Lab #
+
 #################
 
 [openstack_lab:children]
@@ -257,7 +259,7 @@ There are already [a ton of good roles out there](https://galaxy.ansible.com/sea
 Most likely your "/etc/ansible" directory isn't a git repository, in which case just copy the files from the repository instead:
 
 ```bash
-git clone --depth=1 https://github.com/debops/ansible-dhcpd.git /etc/ansible/roles/isc-dhcp && rm -rf !$/.git
+$ git clone --depth=1 https://github.com/debops/ansible-dhcpd.git /etc/ansible/roles/isc-dhcp && rm -rf !$/.git
 ```
 
 Before we proceed, we need to remove the dependency of this role on the "debops.secret" role, as we're not going to be using functionality that requires it.
