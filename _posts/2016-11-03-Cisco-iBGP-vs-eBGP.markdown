@@ -40,7 +40,7 @@ R1(config-if)#no shutdown
 R1(config-if)#ip address 192.168.1.1 255.255.255.0
 ```
 
-Next we'll configure BGP on each of the devices. Don't forget to configure <span style="text-decoration: underline;">next-hop-self</span> on the routers we control otherwise we won't be able to reach the routes that are re-advertised by our routers. I've again shown the configuration of R1:
+Next we'll configure BGP on each of the devices. Don't forget to configure `next-hop-self` on the routers we control otherwise we won't be able to reach the routes that are re-advertised by our routers. I've again shown the configuration of R1:
 
 ```
 R1(config)#router bgp 100
@@ -115,7 +115,7 @@ Both routers are preferring the route that they received via their external peer
 ## Modifying the AD:
 Now that we have everything set up, lets attempt to use AS200 as the preferred path on both routers.
 
-As we already know this is the case on R1, we simply need to change the administrative distance on R2 for routes received from R1. We can do this by using the command <span style="text-decoration: underline;"><span class="lang:sh decode:true crayon-inline ">distance 19 192.168.1.1 0.0.0.0</span></span> which sets all routes received from the neighbour 192.168.1.1 with an AD of 19 (and therefore better than the eBGP AD of 20)
+As we already know this is the case on R1, we simply need to change the administrative distance on R2 for routes received from R1. We can do this by using the command `distance 19 192.168.1.1 0.0.0.0` which sets all routes received from the neighbour 192.168.1.1 with an AD of 19 (and therefore better than the eBGP AD of 20)
 
 ```
 R2(config)#router bgp 100
