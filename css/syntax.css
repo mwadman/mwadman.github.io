@@ -22,6 +22,7 @@
 
 /* Solarized Dark, High Contrast */
 /* https://github.com/mpchadwick/pygments-high-contrast-stylesheets/blob/gh-pages/solarized-dark.css */
+/*
 .highlight { background-color: #002b36; color: #93a1a1; }
 .highlight .c { color: #759299; }
 .highlight .err { color: #93a1a1; }
@@ -91,10 +92,10 @@
 .highlight .vg { color: #3294da; }
 .highlight .vi { color: #3294da; }
 .highlight .il { color: #2aa198; }
+ */
 
 /* Atom One Dark */
 /* https://github.com/mgyongyosi/OneDarkJekyll/blob/master/syntax-one-dark.css */
-/*
 .highlight,pre.highlight{background:#282c34;color:#abb2bf}
 .highlight pre{background:#282c34}
 .highlight .hll{background:#282c34}
@@ -159,7 +160,6 @@
 .highlight .gu{color:#75715e}
 .highlight .gd{color:#f92672}
 .highlight .gi{color:#a6e22e}
- */
 
 /* Original Syntax Highlighing Style */
 /*
