@@ -107,8 +107,8 @@ Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.4.0-116-generic x86_64)
  * Management:     https://landscape.canonical.com
  * Support:        https://ubuntu.com/advantage
 Last login: Sat Jul 28 00:54:32 2018 from 192.168.11.100
-vagrant@vagrant:~$ exit
-logout
+vagrant@vagrant:~$ exit  
+logout  
 Connection to 192.168.11.221 closed.
 ```
 
@@ -153,14 +153,14 @@ We're going to make just a few changes to the defaults in "ansible.cfg".
 I've simply uncommented/changed the following lines to look like the below:
 
 ```config
-...
-forks = 20 # Increases the simultaneous connections Ansible can make
-...
-nocows = 1 # Turns off cowsay during ansible runs
-...
-retry_files_enabled = False # Disables the creation of retry files
-...
-pipelining = True # Uses the same SSH session for multiple tasks on the same host
+...  
+forks = 20 # Increases the simultaneous connections Ansible can make  
+...  
+nocows = 1 # Turns off cowsay during ansible runs  
+...  
+retry_files_enabled = False # Disables the creation of retry files  
+...  
+pipelining = True # Uses the same SSH session for multiple tasks on the same host  
 ...
 ```
 
@@ -337,6 +337,7 @@ Again, we'll use the variable names that the dhcpd role is expecting, which in t
 
 With these defined (and a little bit of variablization), our file ends up looking like the following:
 
+<!-- {% raw %} -->
 ```yaml
 ---
 dhcpd_options: "{{ ztp_option_name }} code 239 = text;"
@@ -376,6 +377,7 @@ ztp_option_name: cumulus-provision-url
 ztp_url: "https://{{ ansible_default_ipv4.address }}/{{ ztp_filename }}"
 ztp_filename: "cumulus_ztp.sh"
 ```
+<!-- {% endraw %}) -->
 
 Which results in the following configuration on our ZTP host:
 
