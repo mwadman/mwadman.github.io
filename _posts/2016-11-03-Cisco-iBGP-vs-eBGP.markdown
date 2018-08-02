@@ -1,12 +1,13 @@
 ---
 layout:     post
-title:      "Ansible Slides"
-subtitle:   "Ansible: An introduction to configuration and state management"
-date:       2018-03-14
+title:      "Cisco iBGP vs. eBGP Route Selection"
+subtitle:   "How route selection works within a route process"
+date:       2016-11-03
 author:     "Michael Wadman"
-catalog: true
+catalog:    true
 tags:
-    - Cisco, BGP
+    - Cisco
+    - BGP
 ---
 
 The other day my colleague stumbled upon a question in his studies (towards the CCNP route exam) and posed it to me. Initially I had no clue what the answer was, but figured it would make for a good topic of a first post.
