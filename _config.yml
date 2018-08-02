@@ -28,7 +28,7 @@ github_username: mwadman
 permalink: pretty
 paginate: 5
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
-anchorjs: true # If you want to customize anchor. check out line:181 of `post.html`
+anchorjs: false # If you want to customize anchor. check out line:181 of `post.html`
 
 
 # Gems
