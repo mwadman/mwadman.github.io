@@ -43,6 +43,7 @@ There is just one place that we need to change the configuration; under "/etc/ne
 
 ```conf
 # The primary network interface
+
 auto enp0s3
 iface enp0s3 inet static
   address 192.168.11.221
@@ -152,13 +153,17 @@ I've simply uncommented/changed the following lines to look like the below:
 
 ```config
 ...  
-forks = 20 # Increases the simultaneous connections Ansible can make  
+forks = 20 # Increases the simultaneous connections Ansible can make
+
 ...  
-nocows = 1 # Turns off cowsay during ansible runs  
+nocows = 1 # Turns off cowsay during ansible runs
+
 ...  
-retry_files_enabled = False # Disables the creation of retry files  
+retry_files_enabled = False # Disables the creation of retry files
+
 ...  
-pipelining = True # Uses the same SSH session for multiple tasks on the same host  
+pipelining = True # Uses the same SSH session for multiple tasks on the same host
+
 ...
 ```
 
