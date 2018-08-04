@@ -20,7 +20,7 @@ Say you administer a network with Cisco routers that uses BGP to peer with two u
 
 Given the above, you as the admin want to use AS200 as the primary exit point for all traffic. How would you complete this?
 # The Problem
-Thinking about the problem and looking at the diagram, my first thought (and my mistake, which I'll elaborate on later) was to compare the AD ([administrative distance](http://www.cisco.com/c/en/us/support/docs/ip/border-gateway-protocol-bgp/15986-admin-distance.html#topic2)) values of the routes received, since the length of the route received from both the iBGP and eBGP peers is the same and because I remembered with Cisco they have different values; with eBGP (AD of 20) being preferred over iBGP (AD of 200) as a lower value is preferred over a higher one.
+Thinking about the problem and looking at the diagram, my first thought (and my mistake, which I'll elaborate on later) was to compare the AD ([administrative distance](https://www.cisco.com/c/en/us/support/docs/ip/border-gateway-protocol-bgp/15986-admin-distance.html#topic2)) values of the routes received, since the length of the route received from both the iBGP and eBGP peers is the same and because I remembered with Cisco they have different values; with eBGP (AD of 20) being preferred over iBGP (AD of 200) as a lower value is preferred over a higher one.
 
 With that thought process, I decided that the routes received via eBGP would always be preferred as the lower AD would take preference, and so the only way to make the router connected to AS300 use its' iBGP path would be to change the AD of iBGP to be lower (and therefore better) than that of eBGP, right?
 # Testing
@@ -154,7 +154,7 @@ However, if we did have the same route (0.0.0.0/0) being put forward by another 
 ## So how *does* BGP choose the best path then?
 Going back to our example; before our routers can install the route 0.0.0.0/0 into their routing table, it needs to be received by the BGP process which picks the route to install by the attributes that a route has.
 
-In our case, BGP has gone through the route [selection process](http://www.cisco.com/c/en/us/support/docs/ip/border-gateway-protocol-bgp/13753-25.html) and has reached step 7, where routes learnt by eBGP are preferred over routes learnt via iBGP.
+In our case, BGP has gone through the route [selection process](https://www.cisco.com/c/en/us/support/docs/ip/border-gateway-protocol-bgp/13753-25.html) and has reached step 7, where routes learnt by eBGP are preferred over routes learnt via iBGP.
 
 I won't cover how BGP makes its' route selection here as that is another topic entirely. All you need to know is that BGP's metric is actually a lot of different metrics (called attributes) that are compared one by one with other contender routes (other routes to the same destination received from other peers) until there is a difference and the tie is broken for a best route to be chosen.
 

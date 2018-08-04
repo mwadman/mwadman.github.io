@@ -37,7 +37,7 @@ gems: [jekyll-paginate]
 
 
 # Markdown settings
-## Documentation: http://jekyllrb.com/docs/configuration/#kramdown
+## Documentation: https://jekyllrb.com/docs/configuration/#kramdown
 markdown: kramdown
 kramdown:
   input: GFM  # Use Github Flavored Markdown

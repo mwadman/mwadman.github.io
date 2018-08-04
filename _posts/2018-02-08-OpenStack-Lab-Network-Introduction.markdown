@@ -25,7 +25,7 @@ The series will roughly look like the following:
 1. [Setup VirtualBox and virtual machines using Vagrant.](https://wadman.co.nz/2018/04/08/OpenStack-Lab-Network-Vagrant/)
 2. Install and configure ZTP server and boot switches.
   * [Part 1 - DHCP](https://wadman.co.nz/2018/06/08/OpenStack-Lab-Network-DHCP/)
-  * [Part 2 - HTTP](http://wadman.co.nz/2018/08/03/OpenStack-Lab-Network-HTTP/)
+  * [Part 2 - HTTP](https://wadman.co.nz/2018/08/03/OpenStack-Lab-Network-HTTP/)
 3. Configure network underlay (eBGP) using Ansible
 4. Configure network overlay (VXLAN with EVPN) using Ansible.
 5. Initial deployment of OpenStack servers using OpenStack-Ansible
@@ -63,7 +63,7 @@ Each of the server VM's will have its' first network interface connected to the 
 
 And the [production network diagram](https://www.draw.io/?lightbox=1&amp;highlight=0000ff&amp;edit=_blank&amp;layers=1&amp;nav=1#R1VrLcpswFP0aL%2BsBJPFYNm6aLtLHjBdtlwrIhgYjRpZju19fEcRDwriEYIyzCTpCF%2Bncc6WjSWZgsTk8MJyGX2lA4pllBIcZ%2BDSzLMuwbfErQ445YpqGlSNrFgUSq4Bl9JdI0JDoLgrIVnmRUxrzKFVBnyYJ8bmCYcboXn1tRWP1qylekwaw9HHcRH9GAQ9z1LWcCv9ConVYfNm0vbznCfvPa0Z3ifzezAKr15%2B8e4OLWHKh2xAHdF%2BDwP0MLBilPH%2FaHBYkzsgtaMvHfW7pLefNSMK7DJBpecHxTi59mUYJEZAMteXHgpTXZZFsoDEDd%2Fsw4mSZYj%2Fr3QsdCCzkm1i0TPG4iuJ4QWPKXseCABE3gALfckafSa3HtZ6A0Au4a05dTuGFME4ONUgu5YHQDeHsKF4plGdLWqXuSpr3VRLNAgtrCSzGYambdRm64k48SPpOUwkaVD4SLPJugBtkEmpMQmNEJmEbk7eoyWsSidqItG6QyKsy6bUxCW%2BQSfuaTJqowRgJxOErm5TxkK5pguP7Cr1TOa3xRw4R%2FyXh7Pl39jx3UNZMxMzKvqxR6%2FxDOD9K34F3nAqo%2BvIjpamM38r2lu6YT5RDlGO2JlyBspWdzQgjMebRi2o73kPvic2zyXcSfMxMkmglNCEtjM4tVCdVYXRu1Tk1i8YPwiIxY8LkgE7swf7s1fSKTsi1wDqTLL%2Fwg0ZivmW5mEgtF2BpZZCvRo6qmy0tkOVCNZChBco5aAR6zXm57G4yaG79l5ABHE4GaOoyAKajZg95%2FWQAtO0XwMvJwBlFBvZwMgBTlwG0tMMT9NwNAPjPtjKgDNxRZOAOJwNv6jKwHVeVgdlTBkjTk%2BVdTAaF4E7c9m%2FxQqDfUce97TfvorduYwt51IuuwMY3smA4I%2Btczch2pm%2BcTavcW%2FSL31s3LTiekwXvdrKD2dUJZxaggTKLxjOnwB6lwi9rTiemA3uoCkfjuVMw3CXlnA4u604npgN3KB0449lTZDV08D0lyZZj%2F1nACyryReNYpGpIr7pyfeL7p7zqk4sgOquJ7l7VdFQay2227lWNE3ow9etlr78DvNtLVWWEGmVUVp9efJ1qqch6vZjgtGpJS51eAV1LydS2VHS5o7VQV2spbdIdz%2B5932hAbrCc0FXLyWuy2%2FfAOnNeNQqtdzmhSZUTMJCaOxPOUb%2BKgkgL5TZCDVdTXqHSCW6i9mn3oVmUa2Ydei0V%2B%2Bac685GDzRgxsc5Nm1QS%2FkHY24YrgR6mdNOWvCuqQUbDqQFR7%2F1DqYF0az%2BCSt%2FvfpXN3D%2FDw%3D%3D):
 
-![OpenStack Lab Production Network](http://michaelwadman.files.wordpress.com/2018/06/openstack-lab-network.png)
+![OpenStack Lab Production Network](https://michaelwadman.files.wordpress.com/2018/06/openstack-lab-network.png)
 
 After some initial research into both OpenStack and Cumulus (and using them together) I've decided to go with a leaf/spine network design.
 I've mainly chosen this because it quickly become the most common data centre network design.

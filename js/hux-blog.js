@@ -1,13 +1,13 @@
 /*!
- * Clean Blog v1.0.0 (http://startbootstrap.com)
+ * Clean Blog v1.0.0 (https://startbootstrap.com)
  * Copyright 2015 Start Bootstrap
  * Licensed under Apache 2.0 (https://github.com/IronSummitMedia/startbootstrap/blob/gh-pages/LICENSE)
  */
 
  /*!
- * Hux Blog v1.6.0 (http://startbootstrap.com)
+ * Hux Blog v1.6.0 (https://startbootstrap.com)
  * Copyright 2016 @huxpro
- * Licensed under Apache 2.0 
+ * Licensed under Apache 2.0
  */
 
 // Tooltip Init
@@ -18,7 +18,7 @@
 
 
 // make all images responsive
-/* 
+/*
  * Unuse by Hux
  * actually only Portfolio-Pages can't use it and only post-img need it.
  * so I modify the _layout/post and CSS to make post-img responsive!
@@ -48,7 +48,7 @@ jQuery(document).ready(function($) {
     //primary navigation slide-in effect
     if ($(window).width() > MQL) {
         var headerHeight = $('.navbar-custom').height(),
-            bannerHeight  = $('.intro-header .container').height();     
+            bannerHeight  = $('.intro-header .container').height();
         $(window).on('scroll', {
                 previousTop: 0
             },
