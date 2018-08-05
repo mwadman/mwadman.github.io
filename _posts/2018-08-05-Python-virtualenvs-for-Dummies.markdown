@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Dummies guide to Python Virtualenv"
+title:      "Python Virtualenv for Dummies"
 subtitle:   "Installing pip packages without breaking your system"
 date:       2018-08-05
 author:     "Michael Wadman"
@@ -21,7 +21,7 @@ However, installing and using virtualenv seemed far too complicated, especially 
 
 This post is meant as a "Python Virtualenv for Dummies"; both so that I have a quick document to refer back to, and hopefully to help those as helpless as I am.
 
-> Note that this post focuses on an installation of Ubuntu 18.04 with Python v2.7, but should hopefully be globally (both OS and Python version wise).
+> Note that this post uses an installation of Ubuntu 18.04 with Python v2.7, but should hopefully be global (both OS and Python version wise).
 
 # Installation
 
@@ -53,8 +53,6 @@ The name "venv" is a common one, but you can name it whatever you want.
 
 > Don't forget to add this directory to your .gitignore (or equivalent) if you're using SCM.
 
-&nbsp; <!--- Used to add a double line break --->
-
 Within this newly created directory are the python binaries that we can use to only affect our project.
 For example, to install pip packages to our environment:
 
@@ -84,8 +82,6 @@ Now we can run commands without referencing the binaries folder:
 $ pip install $PackageName
 ```
 
-&nbsp; <!--- Used to add a double line break --->
-
 Behind the scenes, all this does is change the $PATH entry for the current shell session so that the first entry is the local virtualenv.
 
 ```bash
@@ -96,7 +92,7 @@ $ $PATH
 bash: /path/to/project/dir/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:
 ```
 
-To reverse this, either leave the current session or run the deactivate script:
+To reverse this, either leave the current shell session or run the deactivate script:
 
 ```bash
 $ deactivate
@@ -108,11 +104,11 @@ Hopefully this post was short and simple enough to understand, as I expect to re
 
 ## References:
 
-[Virtualenv Official Documentation](https://virtualenv.pypa.io/en/stable/)
+[Virtualenv Official Documentation](https://virtualenv.pypa.io/en/stable/)  
 [A non-magical introduction to Pip and Virtualenv for Python beginners](https://www.dabapps.com/blog/introduction-to-pip-and-virtualenv-python/)
 
 ## Versions used:
 
-Desktop Machine: *kubuntu-18.04.1*
-Python: *Python 2.7.15rc1*
-Virtualenv: 16.0.0
+Desktop Machine: *kubuntu-18.04.1*  
+Python: *Python 2.7.15rc1*  
+Virtualenv: *16.0.0*
