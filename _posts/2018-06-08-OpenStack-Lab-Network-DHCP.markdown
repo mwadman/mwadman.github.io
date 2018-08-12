@@ -354,27 +354,27 @@ dhcpd_hosts:
   - hostname: cumulus-spine01
     address: '192.168.11.201'
     ethernet: '08:00:27:00:00:01'
-    options: "{{ ztp_option_name }} '{{ ztp_url }}';"
+    options: '{{ ztp_option_name }} "{{ ztp_url }}";'
   - hostname: cumulus-spine02
     address: '192.168.11.202'
     ethernet: '08:00:27:00:00:02'
-    options: "{{ ztp_option_name }} '{{ ztp_url }}';"
+    options: '{{ ztp_option_name }} "{{ ztp_url }}";'
   - hostname: cumulus-leaf01
     address: '192.168.11.211'
     ethernet: '08:00:27:00:00:11'
-    options: "{{ ztp_option_name }} '{{ ztp_url }}';"
+    options: '{{ ztp_option_name }} "{{ ztp_url }}";'
   - hostname: cumulus-leaf02
     address: '192.168.11.212'
     ethernet: '08:00:27:00:00:12'
-    options: "{{ ztp_option_name }} '{{ ztp_url }}';"
+    options: '{{ ztp_option_name }} "{{ ztp_url }}";'
   - hostname: cumulus-leaf03
     address: '192.168.11.213'
     ethernet: '08:00:27:00:00:13'
-    options: "{{ ztp_option_name }} '{{ ztp_url }}';"
+    options: '{{ ztp_option_name }} "{{ ztp_url }}";'
   - hostname: cumulus-leaf04
     address: '192.168.11.214'
     ethernet: '08:00:27:00:00:14'
-    options: "{{ ztp_option_name }} '{{ ztp_url }}';"
+    options: '{{ ztp_option_name }} "{{ ztp_url }}";'
   - hostname: openstack-control
     address: '192.168.11.231'
     ethernet: '08:00:27:00:00:31'
@@ -382,8 +382,8 @@ dhcpd_hosts:
     address: '192.168.11.232'
     ethernet: '08:00:27:00:00:32'
 
-ztp_option_name: cumulus-provision-url
-ztp_url: "https://{{ ansible_default_ipv4.address }}/{{ ztp_filename }}"
+ztp_option_name: "option cumulus-provision-url"
+ztp_url: "http://{{ ansible_default_ipv4.address }}/{{ ztp_filename }}"
 ztp_filename: "cumulus_ztp.sh"
 ```
 <!-- {% endraw %}) -->
@@ -406,45 +406,43 @@ option domain-name "vm";
 option domain-search "vm";
 option dhcp6.domain-search "vm";
 
-option domain-name-servers 192.168.20.11, 192.168.20.10;
+option domain-name-servers 192.168.20.10;
 
 # Configuration options
-
-cumulus-provision-url code 239 = text;
+option cumulus-provision-url code 239 = text;
 
 # Generated automatically by Ansible
-
 subnet 192.168.11.0 netmask 255.255.255.0 {
         option routers 192.168.11.1;
 }
 
 host cumulus-spine01 {
-        cumulus-provision-url 'https://192.168.11.221/cumulus_ztp.sh';
+        option cumulus-provision-url "http://192.168.11.221/cumulus_ztp.sh";
         hardware ethernet 08:00:27:00:00:01;
         fixed-address 192.168.11.201;
 }
 host cumulus-spine02 {
-        cumulus-provision-url 'https://192.168.11.221/cumulus_ztp.sh';
+        option cumulus-provision-url "http://192.168.11.221/cumulus_ztp.sh";
         hardware ethernet 08:00:27:00:00:02;
         fixed-address 192.168.11.202;
 }
 host cumulus-leaf01 {
-        cumulus-provision-url 'https://192.168.11.221/cumulus_ztp.sh';
+        option cumulus-provision-url "http://192.168.11.221/cumulus_ztp.sh";
         hardware ethernet 08:00:27:00:00:11;
         fixed-address 192.168.11.211;
 }
 host cumulus-leaf02 {
-        cumulus-provision-url 'https://192.168.11.221/cumulus_ztp.sh';
+        option cumulus-provision-url "http://192.168.11.221/cumulus_ztp.sh";
         hardware ethernet 08:00:27:00:00:12;
         fixed-address 192.168.11.212;
 }
 host cumulus-leaf03 {
-        cumulus-provision-url 'https://192.168.11.221/cumulus_ztp.sh';
+        option cumulus-provision-url "http://192.168.11.221/cumulus_ztp.sh";
         hardware ethernet 08:00:27:00:00:13;
         fixed-address 192.168.11.213;
 }
 host cumulus-leaf04 {
-        cumulus-provision-url 'https://192.168.11.221/cumulus_ztp.sh';
+        option cumulus-provision-url "http://192.168.11.221/cumulus_ztp.sh";
         hardware ethernet 08:00:27:00:00:14;
         fixed-address 192.168.11.214;
 }
@@ -463,7 +461,7 @@ host openstack-compute {
 We've now booted, set an IP, and configured DHCP on the ZTP server.
 
 We could boot our OpenStack servers now and they would be ready to configure themselves using Ansible.
-If we booted our Cumulus switches, they would get an IP address and know where to look for their ZTP script - but wouldn't find any script file at the location https://192.168.11.221/cumulus_ztp.sh.
+If we booted our Cumulus switches, they would get an IP address and know where to look for their ZTP script - but wouldn't find any script file at the location http://192.168.11.221/cumulus_ztp.sh.
 
 In the next post I'll cover the configuration of NGINX to serve this file to the switches so that we can finally boot them fully.
 
