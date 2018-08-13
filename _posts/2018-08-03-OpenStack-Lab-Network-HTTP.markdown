@@ -93,6 +93,7 @@ Next up is the installation of the nginx package, which we'll use the `apt` modu
 After installation, nginx installs a default site configuration at `/etc/nginx/sites-enabled/default`, which we need to disable.  
 We're also going to delete the default html directory that nginx creates on installation, as I want to use `/var/www/` as the directory that we serve the ZTP script from and it's best if that is empty.
 
+<!-- {% raw %} -->
 ```yaml
 - name: Remove default nginx site
   file:
@@ -103,6 +104,7 @@ We're also going to delete the default html directory that nginx creates on inst
     - "/var/www/html"
   notify: Restart nginx
 ```
+<!-- {% endraw %} -->
 
 I've included the notify option at the bottom of this task, as we'll need reload nginx in order for this to take effect.  
 This notify option calls a handler, which we'll define in a new file - `/etc/ansible/roles/nginx-ztp/handlers/main.yml`:
@@ -128,6 +130,7 @@ For the configuration file itself, I'm going to use the `template` module as it'
 
 This won't work without the template file itself, which we'll create at `/etc/ansible/roles/nginx-ztp/templates/nginx-site.j2`:
 
+<!-- {% raw %} -->
 ```jinja
 server {
   listen {{ ansible_default_ipv4.address }}:80;
@@ -136,8 +139,9 @@ server {
   autoindex on;
 }
 ```
+<!-- {% endraw %} -->
 
-Super simple configuration, we're telling nginx to listen on the primary IPv4 IP address and serve files from a directory defined by the variable `{{ nginx_root }}`.
+Super simple configuration, we're telling nginx to listen on the primary IPv4 IP address and serve files from a directory defined by the variable <!-- {% raw %} -->`{{ nginx_root }}`<!-- {% endraw %} -->.
 
 For those not familiar with nginx, site configuration files are stored in `/etc/nginx/sites-available` and then symlinked into `/etc/nginx/sites-enabled`.  
 So all we need to do is create that symlink, using the `file` module again:
@@ -180,12 +184,14 @@ We could now test the site is running by visiting http&#58;//192.168.11.221/ - t
 
 Before we write the ZTP script itself, we'll add a task into the role that will move this into the web server root:
 
+<!-- {% raw %} -->
 ```yaml
 - name: Place ZTP script into web server root
   template:
     src: cumulus-ztp.j2
     dest: "{{ nginx_root }}/cumulus_ztp.sh"
 ```
+<!-- {% endraw %} -->
 
 &nbsp; <!--- Used to add a double line break --->
 
