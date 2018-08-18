@@ -101,42 +101,42 @@ We'll do one block for each of the VM's we need - 2 spine switches, 4 leaf switc
 
 ```ruby
 Vagrant.configure("2") do |config|
- # Cumulus Boxes
- config.vm.define "cumulus-spine01" do |device|
-	 device.vm.box = "CumulusCommunity/cumulus-vx"
- end
-
- config.vm.define "cumulus-spine02" do |device|
-	 device.vm.box = "CumulusCommunity/cumulus-vx"
- end
-
- config.vm.define "cumulus-leaf01" do |device|
-	 device.vm.box = "CumulusCommunity/cumulus-vx"
- end
-
- config.vm.define "cumulus-leaf02" do |device|
-	 device.vm.box = "CumulusCommunity/cumulus-vx"
- end
-
- config.vm.define "cumulus-leaf03" do |device|
-	 device.vm.box = "CumulusCommunity/cumulus-vx"
- end
-
- config.vm.define "cumulus-leaf04" do |device|
-	 device.vm.box = "CumulusCommunity/cumulus-vx"
- end
-
  # ZTP Box
- config.vm.define "cumulus-ztp" do |device|
+ config.vm.define "openstack_ztp" do |device|
 	 device.vm.box = "geerlingguy/ubuntu1604"
+ end
+
+ # Cumulus Boxes
+ config.vm.define "cumulus_spine01" do |device|
+	 device.vm.box = "CumulusCommunity/cumulus-vx"
+ end
+
+ config.vm.define "cumulus_spine02" do |device|
+	 device.vm.box = "CumulusCommunity/cumulus-vx"
+ end
+
+ config.vm.define "cumulus_leaf01" do |device|
+	 device.vm.box = "CumulusCommunity/cumulus-vx"
+ end
+
+ config.vm.define "cumulus_leaf02" do |device|
+	 device.vm.box = "CumulusCommunity/cumulus-vx"
+ end
+
+ config.vm.define "cumulus_leaf03" do |device|
+	 device.vm.box = "CumulusCommunity/cumulus-vx"
+ end
+
+ config.vm.define "cumulus_leaf04" do |device|
+	 device.vm.box = "CumulusCommunity/cumulus-vx"
  end
 
  # OpenStack Boxes
- config.vm.define "openstack-control" do |device|
+ config.vm.define "openstack_control" do |device|
 	 device.vm.box = "geerlingguy/ubuntu1604"
  end
 
- config.vm.define "openstack-compute" do |device|
+ config.vm.define "openstack_compute" do |device|
 	 device.vm.box = "geerlingguy/ubuntu1604"
  end
 end
@@ -153,11 +153,11 @@ VirtualBox specific configuration can be defined both globally individually for 
 For example, we can set what each VM is named in VirtualBox:
 
 ```ruby
-config.vm.define "cumulus-spine01" do |device|
+config.vm.define "cumulus_spine01" do |device|
 	 device.vm.box = "CumulusCommunity/cumulus-vx"
 
 	 device.vm.provider "virtualbox" do |vb|
-		 vb.name = "openstack-spine01"
+		 vb.name = "openstack_spine01"
 	 end
  end
 ```
@@ -165,11 +165,11 @@ config.vm.define "cumulus-spine01" do |device|
 More importantly, we can also specify how many CPU's and how much RAM we allocate to the VM:
 
 ```ruby
-config.vm.define "cumulus-spine01" do |device|
+config.vm.define "cumulus_spine01" do |device|
 	 device.vm.box = "CumulusCommunity/cumulus-vx"
 
 	 device.vm.provider "virtualbox" do |vb|
-		 vb.name = "openstack-spine01"
+		 vb.name = "openstack_spine01"
 		 vb.memory = 1024
 		 vb.cpus = 1
 	 end
@@ -195,7 +195,7 @@ With the above, the VM's will now be grouped in VirtualBox, like so:
 This would usually look like the following if you we're using the VBoxManage command line utility:
 
 ```bash
-VBoxManage modifyvm "cumulus-spine01" --groups "/OpenStack Lab"
+VBoxManage modifyvm "cumulus_spine01" --groups "/OpenStack Lab"
 ```
 
 &nbsp; <!--- Used to add a double line break --->
@@ -203,93 +203,94 @@ VBoxManage modifyvm "cumulus-spine01" --groups "/OpenStack Lab"
 We'll apply the configuration completed above to the rest of our machines and we're done with VirtualBox configuration:
 
 ```ruby
-config.vm.define "cumulus-spine01" do |device|
+# ZTP Box
+config.vm.define "openstack_ztp" do |device|
+ device.vm.box = "geerlingguy/ubuntu1604"
+
+ device.vm.provider "virtualbox" do |vb|
+	 vb.name = "ztp-server"
+	 vb.memory = 2048
+	 vb.cpus = 1
+ end
+end
+
+# Cumulus Switches
+config.vm.define "cumulus_spine01" do |device|
 	 device.vm.box = "CumulusCommunity/cumulus-vx"
 
 	 device.vm.provider "virtualbox" do |vb|
-		 vb.name = "cumulus-spine01"
+		 vb.name = "cumulus_spine01"
 		 vb.memory = 1024
 		 vb.cpus = 1
 	 end
  end
 
- config.vm.define "cumulus-spine02" do |device|
+ config.vm.define "cumulus_spine02" do |device|
 	 device.vm.box = "CumulusCommunity/cumulus-vx"
 
 	 device.vm.provider "virtualbox" do |vb|
-		 vb.name = "cumulus-spine02"
+		 vb.name = "cumulus_spine02"
 		 vb.memory = 1024
 		 vb.cpus = 1
 	 end
  end
 
- config.vm.define "cumulus-leaf01" do |device|
+ config.vm.define "cumulus_leaf01" do |device|
 	 device.vm.box = "CumulusCommunity/cumulus-vx"
 
 	 device.vm.provider "virtualbox" do |vb|
-		 vb.name = "cumulus-leaf01"
+		 vb.name = "cumulus_leaf01"
 		 vb.memory = 1024
 		 vb.cpus = 1
 	 end
  end
 
- config.vm.define "cumulus-leaf02" do |device|
+ config.vm.define "cumulus_leaf02" do |device|
 	 device.vm.box = "CumulusCommunity/cumulus-vx"
 
 	 device.vm.provider "virtualbox" do |vb|
-		 vb.name = "cumulus-leaf02"
+		 vb.name = "cumulus_leaf02"
 		 vb.memory = 1024
 		 vb.cpus = 1
 	 end
  end
 
- config.vm.define "cumulus-leaf03" do |device|
+ config.vm.define "cumulus_leaf03" do |device|
 	 device.vm.box = "CumulusCommunity/cumulus-vx"
 
 	 device.vm.provider "virtualbox" do |vb|
-		 vb.name = "cumulus-leaf03"
+		 vb.name = "cumulus_leaf03"
 		 vb.memory = 1024
 		 vb.cpus = 1
 	 end
  end
 
- config.vm.define "cumulus-leaf04" do |device|
+ config.vm.define "cumulus_leaf04" do |device|
 	 device.vm.box = "CumulusCommunity/cumulus-vx"
 
 	 device.vm.provider "virtualbox" do |vb|
-		 vb.name = "cumulus-leaf04"
+		 vb.name = "cumulus_leaf04"
 		 vb.memory = 1024
-		 vb.cpus = 1
-	 end
- end
-
- # ZTP Box
- config.vm.define "cumulus-ztp" do |device|
-	 device.vm.box = "geerlingguy/ubuntu1604"
-
-	 device.vm.provider "virtualbox" do |vb|
-		 vb.name = "ztp-server"
-		 vb.memory = 2048
 		 vb.cpus = 1
 	 end
  end
 
  # OpenStack Boxes
- config.vm.define "openstack-control" do |device|
+ config.vm.define "openstack_control" do |device|
 	 device.vm.box = "geerlingguy/ubuntu1604"
 
 	 device.vm.provider "virtualbox" do |vb|
-		 vb.name = "openstack-control"
+		 vb.name = "openstack_control"
 		 vb.memory = 4096
 		 vb.cpus = 1
 	 end
  end
 
- config.vm.define "openstack-compute" do |device|
+ config.vm.define "openstack_compute" do |device|
 	 device.vm.box = "geerlingguy/ubuntu1604"
 
 	 device.vm.provider "virtualbox" do |vb|
-		 vb.name = "openstack-compute"
+		 vb.name = "openstack_compute"
 		 vb.memory = 8192
 		 vb.cpus = 2
 	 end
@@ -382,12 +383,30 @@ Vagrant.configure("2") do |config|
     bridge: "enp6s0",
     auto_config: false
 
+  ##########
+  # ZTP VM #
+  ##########
+
+  # ZTP VM
+  config.vm.define "openstack_ztp" do |device|
+    device.vm.box = "geerlingguy/ubuntu1604"
+    device.ssh.host = "192.168.11.221"
+
+    # VirtualBox Config
+    device.vm.provider "virtualbox" do |vb|
+      vb.name = "ztp-server"
+      vb.memory = 1024
+      vb.cpus = 1
+      vb.customize ["modifyvm", :id, "--macaddress1", "080027000021"]
+    end
+  end
+
   ################
   # Cumulus VM's #
   ################
 
   # Spine 1
-  config.vm.define "cumulus-spine01" do |device|
+  config.vm.define "cumulus_spine01" do |device|
     device.vm.box = "CumulusCommunity/cumulus-vx"
     device.ssh.host = "192.168.11.201"
 
@@ -414,7 +433,7 @@ Vagrant.configure("2") do |config|
 
     # VirtualBox Config
     device.vm.provider "virtualbox" do |vb|
-      vb.name = "cumulus-spine01"
+      vb.name = "cumulus_spine01"
       vb.memory = 1024
       vb.cpus = 1
       vb.customize ["modifyvm", :id, "--macaddress1", "080027000001"]
@@ -422,7 +441,7 @@ Vagrant.configure("2") do |config|
   end
 
   # Spine 2
-  config.vm.define "cumulus-spine02" do |device|
+  config.vm.define "cumulus_spine02" do |device|
     device.vm.box = "CumulusCommunity/cumulus-vx"
     device.ssh.host = "192.168.11.202"
 
@@ -449,7 +468,7 @@ Vagrant.configure("2") do |config|
 
     # VirtualBox Config
     device.vm.provider "virtualbox" do |vb|
-      vb.name = "cumulus-spine02"
+      vb.name = "cumulus_spine02"
       vb.memory = 1024
       vb.cpus = 1
       vb.customize ["modifyvm", :id, "--macaddress1", "080027000002"]
@@ -457,7 +476,7 @@ Vagrant.configure("2") do |config|
   end
 
   # Leaf 1
-  config.vm.define "cumulus-leaf01" do |device|
+  config.vm.define "cumulus_leaf01" do |device|
     device.vm.box = "CumulusCommunity/cumulus-vx"
     device.ssh.host = "192.168.11.211"
 
@@ -479,7 +498,7 @@ Vagrant.configure("2") do |config|
 
     # VirtualBox Config
     device.vm.provider "virtualbox" do |vb|
-      vb.name = "cumulus-leaf01"
+      vb.name = "cumulus_leaf01"
       vb.memory = 1024
       vb.cpus = 1
       vb.customize ["modifyvm", :id, "--macaddress1", "080027000011"]
@@ -487,7 +506,7 @@ Vagrant.configure("2") do |config|
   end
 
   # Leaf 2
-  config.vm.define "cumulus-leaf02" do |device|
+  config.vm.define "cumulus_leaf02" do |device|
     device.vm.box = "CumulusCommunity/cumulus-vx"
     device.ssh.host = "192.168.11.212"
 
@@ -509,7 +528,7 @@ Vagrant.configure("2") do |config|
 
     # VirtualBox Config
     device.vm.provider "virtualbox" do |vb|
-      vb.name = "cumulus-leaf02"
+      vb.name = "cumulus_leaf02"
       vb.memory = 1024
       vb.cpus = 1
       vb.customize ["modifyvm", :id, "--macaddress1", "080027000012"]
@@ -517,7 +536,7 @@ Vagrant.configure("2") do |config|
   end
 
   # Leaf 3
-  config.vm.define "cumulus-leaf03" do |device|
+  config.vm.define "cumulus_leaf03" do |device|
     device.vm.box = "CumulusCommunity/cumulus-vx"
     device.ssh.host = "192.168.11.213"
 
@@ -539,7 +558,7 @@ Vagrant.configure("2") do |config|
 
     # VirtualBox Config
     device.vm.provider "virtualbox" do |vb|
-      vb.name = "cumulus-leaf03"
+      vb.name = "cumulus_leaf03"
       vb.memory = 1024
       vb.cpus = 1
       vb.customize ["modifyvm", :id, "--macaddress1", "080027000013"]
@@ -547,7 +566,7 @@ Vagrant.configure("2") do |config|
   end
 
   # Leaf 4
-  config.vm.define "cumulus-leaf04" do |device|
+  config.vm.define "cumulus_leaf04" do |device|
     device.vm.box = "CumulusCommunity/cumulus-vx"
     device.ssh.host = "192.168.11.214"
 
@@ -569,28 +588,10 @@ Vagrant.configure("2") do |config|
 
     # VirtualBox Config
     device.vm.provider "virtualbox" do |vb|
-      vb.name = "cumulus-leaf04"
+      vb.name = "cumulus_leaf04"
       vb.memory = 1024
       vb.cpus = 1
       vb.customize ["modifyvm", :id, "--macaddress1", "080027000014"]
-    end
-  end
-
-  ##########
-  # ZTP VM #
-  ##########
-
-  # ZTP VM
-  config.vm.define "cumulus-ztp" do |device|
-    device.vm.box = "geerlingguy/ubuntu1604"
-    device.ssh.host = "192.168.11.221"
-
-    # VirtualBox Config
-    device.vm.provider "virtualbox" do |vb|
-      vb.name = "ztp-server"
-      vb.memory = 1024
-      vb.cpus = 1
-      vb.customize ["modifyvm", :id, "--macaddress1", "080027000021"]
     end
   end
 
@@ -599,7 +600,7 @@ Vagrant.configure("2") do |config|
   ##################
 
   # OpenStack Control
-  config.vm.define "openstack-control" do |device|
+  config.vm.define "openstack_control" do |device|
     device.vm.box = "geerlingguy/ubuntu1604"
     device.ssh.host = "192.168.11.231"
 
@@ -616,7 +617,7 @@ Vagrant.configure("2") do |config|
 
     # VirtualBox Config
     device.vm.provider "virtualbox" do |vb|
-      vb.name = "openstack-control"
+      vb.name = "openstack_control"
       vb.memory = 4096
       vb.cpus = 1
       vb.customize ["modifyvm", :id, "--macaddress1", "080027000031"]
@@ -624,7 +625,7 @@ Vagrant.configure("2") do |config|
   end
 
   # OpenStack Compute
-  config.vm.define "openstack-compute" do |device|
+  config.vm.define "openstack_compute" do |device|
     device.vm.box = "geerlingguy/ubuntu1604"
     device.ssh.host = "192.168.11.232"
 
@@ -641,7 +642,7 @@ Vagrant.configure("2") do |config|
 
     # VirtualBox Config
     device.vm.provider "virtualbox" do |vb|
-      vb.name = "openstack-compute"
+      vb.name = "openstack_compute"
       vb.memory = 8192
       vb.cpus = 2
       vb.customize ["modifyvm", :id, "--macaddress1", "080027000032"]
