@@ -169,7 +169,7 @@ nginx_root: "/var/www/"
 Before adding our ZTP script, let's run this playbook quickly to ensure everything is working.
 
 ```bash
-$ ansible-playbook /etc/ansible/playbooks/cumulus-ztp.yml
+$ ansible-playbook /etc/ansible/playbooks/openstack_ztp.yml
 ...
 PLAY RECAP ****************************************************************
 cumulus-ztp                : ok=9   changed=6    unreachable=0    failed=0
@@ -193,7 +193,7 @@ Before we write the ZTP script itself, we'll add a task into the role that will 
 ```
 <!-- {% endraw %} -->
 
-&nbsp; <!--- Used to add a double line break --->
+### ZTP Configuration
 
 The script itself we'll create under the templates directory for the role, just like the nginx configuration.  
 Cumulus has some [good documentation](https://docs.cumulusnetworks.com/display/DOCS/Zero+Touch+Provisioning+-+ZTP#ZeroTouchProvisioning-ZTP-WritingZTPScripts) on their website about the writing of ZTP scripts.
@@ -240,11 +240,11 @@ apt-get dist-upgrade -y
 exit 0
 ```
 
-# Testing
+### Testing ZTP
 
 After saving the above files, we'll run the playbook again so that our ztp script is now available on the web server.
 
-Next is booting one of the Cumulus switches and checking whether everything completes successfully.  
+Next is booting one of the Cumulus switches (`vagrant up cumulus_spine01`) and checking whether everything completes successfully.
 The best way to do this is by checking with the ZTP daemon on the switch, using the command `ztp -s`:
 
 ```bash
@@ -261,6 +261,118 @@ URL                                   http://192.168.11.221/cumulus_ztp.sh
 
 This clearly shows us that ZTP both picked up the correct url for the script, but also ran this with a successful result.
 
+## Running Ansible Playbooks with Vagrant
+
+The above is all well and good, but if we ran the command `vagrant up` to provision our entire environment from scratch it wouldn't work.  
+This is because we aren't running the above playbook on the ZTP guest during this provisioning (inbetween the creation of the ZTP and switch guest VM's).
+
+To solve this we need to enter a `.vm.provision` block into our Vagrantfile, and because we're only doing this on the ZTP guest we'll only place this in the ZTP VM block:
+
+```ruby
+##########
+# ZTP VM #
+##########
+
+# ZTP VM
+config.vm.define "openstack_ztp" do |device|
+  device.vm.box = "geerlingguy/ubuntu1604"
+  device.ssh.host = "192.168.11.221"
+
+  # VirtualBox Config
+  device.vm.provider "virtualbox" do |vb|
+    vb.name = "ztp-server"
+    vb.memory = 1024
+    vb.cpus = 1
+    vb.customize ["modifyvm", :id, "--macaddress1", "080027000021"]
+  end
+
+  # Run the ZTP playbook on the ZTP host
+  device.vm.provision :ansible do |ansible|
+    ansible.playbook = "/etc/ansible/playbooks/openstack_ztp.yml"
+    ansible.inventory_path = "/etc/ansible/hosts"
+  end
+end
+```
+
+The syntax is quite simple;
+- `ansible.playbook` is where you tell Vagrant the path to the playbook you want to run.
+- `ansible.inventory_path` is needed if you're specifying Ansible variables outside of the Vagrantfile (which is possible, but I don't think it's very tidy as now you're crossing systems)
+
+## Vagrant Up!
+
+With the above defined, we can finally provision our entire environment.  
+The below shows a successful run:
+
+```bash
+$ vagrant up
+...
+==> openstack_ztp: Running provisioner: ansible
+...
+PLAY RECAP ****************************************************************
+cumulus-ztp                : ok=14   changed=9    unreachable=0    failed=0
+...
+==> openstack_ztp: Machine booted and ready!
+...
+==> cumulus_spine01: Machine booted and ready!
+...
+==> cumulus_spine02: Machine booted and ready!
+...
+==> cumulus_leaf01: Machine booted and ready!
+...
+==> cumulus_leaf02: Machine booted and ready!
+...
+==> cumulus_leaf03: Machine booted and ready!
+...
+==> cumulus_leaf04: Machine booted and ready!
+...
+==> openstack_control: Machine booted and ready!
+...
+==> openstack_compute: Machine booted and ready!
+...
+```
+
+We can test that everything is up and reachable through ansible as well:
+
+```bash
+$ ansible -m ping openstack_lab
+cumulus-leaf03 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+cumulus-ztp | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+cumulus-leaf04 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+cumulus-leaf01 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+cumulus-leaf02 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+cumulus-spine01 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+cumulus-spine02 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+openstack-compute | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+openstack-control | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+```
+
 # Conclusion
 
 In this post we've covered how to write a ztp script for Cumulus Linux devices, and the configuration of a (very) simple web server to serve this to the switches as they boot.  
@@ -272,6 +384,7 @@ In the next post I'll move onto the configuration of routing underlay of the Ope
 
 [Cumulus Technical Documentation - Zero Touch Provisioning](https://docs.cumulusnetworks.com/display/DOCS/Zero+Touch+Provisioning+-+ZTP)
 [Cumulus Networks Example ZTP Scripts on Github](https://github.com/CumulusNetworks/example-ztp-scripts)
+[Vagrant - Ansible Provisioner](https://www.vagrantup.com/docs/provisioning/ansible.html)
 
 ## Versions used:
 
