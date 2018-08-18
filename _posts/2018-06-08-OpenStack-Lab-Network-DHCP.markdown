@@ -31,7 +31,7 @@ Usually this would be handled by Vagrant, but like [I covered in the last post](
 To do this we need to boot the machine, using the following command:
 
 ```bash
-$ vagrant up cumulus-ztp
+$ vagrant up openstack_ztp
 ```
 
 ## Setting a Static IP address
@@ -93,7 +93,7 @@ This should result in a happier looking output and a successful exit from the co
 
 ```text
 ...
-==> cumulus-ztp: Machine booted and ready!
+==> openstack_ztp: Machine booted and ready!
 ...
 ```
 
@@ -239,7 +239,7 @@ cumulus-ztp | SUCCESS => {
 We'll start off by writing the playbook that we'll call to apply configuration to the host.
 
 Firstly, because I like to organise all of my playbooks into a directory structure, I'm going to create the "/etc/ansible/playbooks" directory.
-Under this directory I'm creating a new file named "cumulus-ztp.yml", with the following content:
+Under this directory I'm creating a new file named "openstack_ztp.yml", with the following content:
 
 ```yaml
 ---
@@ -278,7 +278,7 @@ dependencies: []
 Now we can run the playbook and have Ansible configure our DHCP server:
 
 ```bash
-$ ansible-playbook /etc/ansible/playbooks/cumulus-ztp.yml
+$ ansible-playbook /etc/ansible/playbooks/openstack_ztp.yml
 ...
 PLAY RECAP
 ***************************************************************************
