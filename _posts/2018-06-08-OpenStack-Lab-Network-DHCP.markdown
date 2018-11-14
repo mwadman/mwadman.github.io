@@ -16,7 +16,7 @@ tags:
 
 # Overview
 
-This post is the third in a series that plans to document my progress through installing and configuring a OpenStack Lab, using Cumulus switches for the network.
+This post is the third in a series that plans to document my progress through installing and configuring an OpenStack Lab, using Cumulus switches for the network.
 
 For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
@@ -26,7 +26,7 @@ This post will cover the installation of the DHCP part on the ZTP server using A
 # Setup
 
 The first thing we need to do before we can configure the ZTP server is give it an IP address.
-Usually this would be handled by Vagrant, but like [I covered in the last post](https://wadman.co.nz/2018/04/08/OpenStack-Lab-Network-Vagrant/#networking), this isn't possible when we set the first interface to be bridged.
+This would usually be handled by Vagrant, but like [I covered in the last post](https://wadman.co.nz/2018/04/08/OpenStack-Lab-Network-Vagrant/#networking), this isn't possible when we set the first interface to be bridged.
 
 To do this we need to boot the machine, using the following command:
 
@@ -217,7 +217,7 @@ openstack-compute ansible_host=192.168.11.232
 
 In the above we define a parent group, `[openstack_lab]`, and assign some variables to it so that ansible knows how to log in.
 
-Next we define children groups so that we can run playbooks against certain subsets of hosts.  
+Next, we define children groups so that we can run playbooks against certain subsets of hosts.  
 For example, we don't want the configuration we apply to the switches to be applied to the ZTP server or vice-versa.
 
 With the above defined, we should be able to test connectivity using the ansible ping module:
@@ -236,7 +236,7 @@ cumulus-ztp | SUCCESS => {
 
 ### Ansible Playbook
 
-We'll start off by writing the playbook that we'll call to apply configuration to the host.
+We'll start off by writing the playbook that we'll call to apply the configuration to the host.
 
 Firstly, because I like to organise all of my playbooks into a directory structure, I'm going to create the "/etc/ansible/playbooks" directory.
 Under this directory I'm creating a new file named "openstack_ztp.yml", with the following content:
@@ -255,7 +255,7 @@ I've named the `role: isc-dhcp`, as we're going to be implementing ZTP (and DHCP
 
 ### Ansible Role
 
-There are already [a ton of good roles out there](https://galaxy.ansible.com/search?keywords=dhcp%20isc&amp;order_by=-relevance&amp;page_size=10)  for installing isc-dhcp-server. The [DebOps dhcpd role](https://github.com/debops/ansible-dhcpd) is great example, so I'll clone this as a [submodule](https://chrisjean.com/git-submodules-adding-using-removing-and-updating/) into my local repository:
+There are already [a ton of good roles out there](https://galaxy.ansible.com/search?keywords=dhcp%20isc&amp;order_by=-relevance&amp;page_size=10)  for installing isc-dhcp-server. The [DebOps dhcpd role](https://github.com/debops/ansible-dhcpd) is a great example, so I'll clone this as a [submodule](https://chrisjean.com/git-submodules-adding-using-removing-and-updating/) into my local repository:
 
 ```bash
 /etc/ansible$ git submodule add https://github.com/debops/ansible-dhcpd.git roles/isc-dhcp
@@ -312,8 +312,8 @@ subnet 192.168.11.0 netmask 255.255.255.0 {
 }
 ```
 
-This is great because a subnet has already been created, however our hosts still won't get an address (or the switches able to ZTP themselves).
-For that we need to set some variables.
+This is great because a subnet has already been created, but our hosts still won't get an address (or the switches able to ZTP themselves).
+For that, we need to set some variables.
 
 ### Ansible Variables
 
@@ -338,13 +338,13 @@ Note that I'm setting the MAC address as per the static entries that were set in
 With this set for all of our hosts, each of them will now get an IP address on booting.
 That isn't good enough for our switches if we want to ZTP them.
 
-Cumulus have [good documentation](https://docs.cumulusnetworks.com/display/DOCS/Zero+Touch+Provisioning+-+ZTP#ZeroTouchProvisioning-ZTP-ConfiguringtheDHCPServer) on how to configure ZTP.  
+Cumulus has [good documentation](https://docs.cumulusnetworks.com/display/DOCS/Zero+Touch+Provisioning+-+ZTP#ZeroTouchProvisioning-ZTP-ConfiguringtheDHCPServer) on how to configure ZTP.  
 According to the page linked, we simply need to define DHCP option 239 (what the switches request when they ZTP boot), give this option a value and then associate it with the appropriate hosts.
 
-In terms of variables in Ansible this is pretty simple.  
+In terms of variables in Ansible, this is pretty simple.  
 Again, we'll use the variable names that the dhcpd role is expecting, which in this case are "dhcpd_options" and the "options" key under each host entry in the "dhcpd_hosts" dictionary.
 
-With these defined (and a little bit of variablization), our file ends up looking like the following:
+With these defined (and a little bit of variable-ization), our file ends up looking like the following:
 
 <!-- {% raw %} -->
 ```yaml
@@ -463,7 +463,7 @@ We've now booted, set an IP, and configured DHCP on the ZTP server.
 We could boot our OpenStack servers now and they would be ready to configure themselves using Ansible.
 If we booted our Cumulus switches, they would get an IP address and know where to look for their ZTP script - but wouldn't find any script file at the location http://192.168.11.221/cumulus_ztp.sh.
 
-In the next post I'll cover the configuration of NGINX to serve this file to the switches so that we can finally boot them fully.
+In the next post, I'll cover the configuration of NGINX to serve this file to the switches so that we can finally boot them fully.
 
 ## References:
 

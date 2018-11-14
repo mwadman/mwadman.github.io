@@ -16,7 +16,7 @@ tags:
 
 # Overview
 
-This post is the fourth in a series that plans to document my progress through installing and configuring a OpenStack Lab, using Cumulus switches for the network.
+This post is the fourth in a series that plans to document my progress through installing and configuring an OpenStack Lab, using Cumulus switches for the network.
 
 For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
@@ -54,7 +54,7 @@ Like I noted for DHCP roles in my [last post](https://wadman.co.nz/2018/06/08/Op
 
 However, unlike with DHCP, most of the nginx roles out there are meant as roles used to configure a web server serving a web page to users.  
 I feel that in our case, where all we're doing is serving a single file, that it is best if we write our own simple role.  
-Plus it makes for good practice and possible a more interesting blog post as well.
+Plus it makes for good practice and possibly a more interesting blog post as well.
 
 &nbsp; <!--- Used to add a double line break --->
 
@@ -64,7 +64,7 @@ We'll start out by creating directories for the role and its' configuration to l
 $ mkdir -p /etc/ansible/roles/nginx-ztp/tasks/
 ```
 
-Within this directory we'll create the `main.yml` file to begin our role.
+Within this directory, we'll create the `main.yml` file to begin our role.
 
 &nbsp; <!--- Used to add a double line break --->
 
@@ -91,7 +91,7 @@ Next up is the installation of the nginx package, which we'll use the `apt` modu
 &nbsp; <!--- Used to add a double line break --->
 
 After installation, nginx installs a default site configuration at `/etc/nginx/sites-enabled/default`, which we need to disable.  
-We're also going to delete the default html directory that nginx creates on installation, as I want to use `/var/www/` as the directory that we serve the ZTP script from and it's best if that is empty.
+We're also going to delete the default 'html' directory that nginx creates on installation, as I want to use `/var/www/` as the directory that we serve the ZTP script from and it's best if that is empty.
 
 <!-- {% raw %} -->
 ```yaml
@@ -106,8 +106,8 @@ We're also going to delete the default html directory that nginx creates on inst
 ```
 <!-- {% endraw %} -->
 
-I've included the notify option at the bottom of this task, as we'll need reload nginx in order for this to take effect.  
-This notify option calls a handler, which we'll define in a new file - `/etc/ansible/roles/nginx-ztp/handlers/main.yml`:
+I've included the notify option at the bottom of this task, as we'll need to reload nginx in order for this to take effect.  
+This 'notify' option calls a handler, which we'll define in a new file - `/etc/ansible/roles/nginx-ztp/handlers/main.yml`:
 
 ```yaml
 ---
@@ -155,9 +155,9 @@ So all we need to do is create that symlink, using the `file` module again:
   notify: Restart nginx
 ```
 
-We also need to define the variable `nginx_root`, as we've used it in the jinja template.  
+We also need to define the variable `nginx_root`, as we've used it in the Jinja template.  
 The file we're creating to do so will be `/etc/ansible/roles/nginx-ztp/defaults/main.yml`
-I'm using the role defaults to define this, because the value we'll set this to (`/var/www`) is the default of nginx.  
+I'm using the role defaults to define this because the value we'll set this to (`/var/www`) is the default of nginx.  
 
 ```yaml
 ---
@@ -176,7 +176,7 @@ cumulus-ztp                : ok=9   changed=6    unreachable=0    failed=0
 ```
 
 We could now test the site is running by visiting http&#58;//192.168.11.221/ - this will result in the following page:
-<!--- Using the longcode for the colon symbol so that the url isn't highlighted above --->
+<!--- Using the longcode for the colon symbol so that the URL isn't highlighted above --->
 
 ![Nginx Blank File Server](/img/nginx-blank-file-server.png)
 
@@ -214,7 +214,7 @@ Common tasks include:
 
 &nbsp; <!--- Used to add a double line break --->
 
-In my lab I don't have many requirements, so I'm simply going to add the Debian repo's and then upgrade the packages on the device to ensure that they're the latest version.
+I don't have many requirements in my lab, so I'm simply going to add the Debian repo's and then upgrade the packages on the device to ensure that they're the latest version.
 
 This is what my script (`cumulus-ztp.j2`) looks like:
 
@@ -259,12 +259,12 @@ Method                                ZTP DHCP
 URL                                   http://192.168.11.221/cumulus_ztp.sh
 ```
 
-This clearly shows us that ZTP both picked up the correct url for the script, but also ran this with a successful result.
+This clearly shows us that ZTP both picked up the correct URL for the script, but also ran this with a successful result.
 
 ## Running Ansible Playbooks with Vagrant
 
 The above is all well and good, but if we ran the command `vagrant up` to provision our entire environment from scratch it wouldn't work.  
-This is because we aren't running the above playbook on the ZTP guest during this provisioning (inbetween the creation of the ZTP and switch guest VM's).
+This is because we aren't running the above playbook on the ZTP guest during this provisioning (between the creation of the ZTP and switch guest VM's).
 
 To solve this we need to enter a `.vm.provision` block into our Vagrantfile, and because we're only doing this on the ZTP guest we'll only place this in the ZTP VM block:
 
@@ -378,7 +378,7 @@ openstack-control | SUCCESS => {
 In this post we've covered how to write a ztp script for Cumulus Linux devices, and the configuration of a (very) simple web server to serve this to the switches as they boot.  
 We would now be able to run `vagrant up` and all hosts (including the Ubuntu hosts for OpenStack) would get an address via DHCP and the Cumulus Switches would also be updated on top of that.
 
-In the next post I'll move onto the configuration of routing underlay of the OpenStack network, which will be done on the Cumulus switches via Ansible.
+In the next post, I'll move onto the configuration of the routing underlay of the OpenStack network, which will be done on the Cumulus switches via Ansible.
 
 ## References:
 

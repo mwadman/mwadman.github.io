@@ -15,7 +15,7 @@ Recently I was trying to write a [script](https://gitlab.com/mwadman/artstation-
 Now, I am fortunate enough to know that it's a bad idea to install pip packages globally [(especially](https://askubuntu.com/a/802594)[ using ](https://stackoverflow.com/a/15028735)[sudo)](https://stackoverflow.com/a/47268013), so I set about to find the best way to install those dependencies without breaking my system.
 
 I'd heard about virtualenv (Virtual Environment) before, and after a quick google this seemed to be the solution I needed.  
-Simply put, a virtualenv is a secluded environment (directory) where you install the dependencies your application requires, so that it can't interfere with the rest of your operating system (and its' possible seperate dependencies).
+Simply put, a virtualenv is a secluded environment (directory) where you install the dependencies your application requires so that it can't interfere with the rest of your operating system (and its' possible separate dependencies).
 
 However, installing and using virtualenv seemed far too complicated, especially for a python newbie like myself.
 

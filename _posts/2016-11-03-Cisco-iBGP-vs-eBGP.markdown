@@ -11,10 +11,10 @@ tags:
     - BGP
 ---
 
-The other day my colleague stumbled upon a question in his studies (towards the CCNP route exam) and posed it to me. Initially I had no clue what the answer was, but figured it would make for a good topic of a first post.
+The other day my colleague stumbled upon a question in his studies (towards the CCNP route exam) and posed it to me. Initially, I had no clue what the answer was but figured it would make for a good topic of a first post.
 
 # The Question
-Say you administer a network with Cisco routers that uses BGP to peer with two upstream providers (eBGP) who both advertise you the same destination (i.e. a default route, 0.0.0.0/0). You also use BGP as your internal routing protocol (iBGP) and are re-advertising routes to all internal peers. I've included a quick diagram below.
+Say you administer a network with Cisco routers, using BGP to peer with two upstream providers (eBGP) who both advertise you the same destination (i.e. a default route, 0.0.0.0/0). You also use BGP as your internal routing protocol (iBGP) and are re-advertising routes to all internal peers. I've included a quick diagram below.
 
 ![iBGP-vs-eBGP](/img/ibgp-vs-ebgp.png)
 
@@ -73,7 +73,7 @@ Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State
 192.168.2.4     4          300       4       4        1    0    0 00:00:33        0
 ```
 
-Next we will advertise the default route from R3 and R4. Configuration of R3 below:
+Next, we will advertise the default route from R3 and R4. Configuration of R3 below:
 
 ```
 R3(config)#router bgp 200
@@ -145,20 +145,20 @@ To figure out why this happens, we need to think about how a route is installed 
 
 - Routing processes (protocols) determine the best route for each destination (using their metric) and attempt to install these into the routing table.
 
-- The router then receives all routes attempting to be installed by all processes and if there are any conflicting routes (routes to the same destination) then AD is used as a tie breaker before placing one into the routing table to be used for forwarding.
+- The router then receives all routes attempting to be installed by all processes and if there are any conflicting routes (routes to the same destination) then the AD is used as a tiebreaker before placing one into the routing table to be used for forwarding.
 
-Simply put, AD is only evaluated when there are multiple paths to the same destination attempting to be installed by more than one routing process. So in our situation, because iBGP and eBGP are a part of the same process on a Cisco router, the BGP process chooses only one of the 0.0.0.0/0 routes to attempt to install into the routing table and therefore AD is not evaluated.
+Simply put, the AD is only evaluated when there are multiple paths to the same destination attempting to be installed by more than one routing process. So in our situation, because iBGP and eBGP are a part of the same process on a Cisco router, the BGP process chooses only one of the 0.0.0.0/0 routes to attempt to install into the routing table and therefore the AD is not evaluated.
 
-However, if we did have the same route (0.0.0.0/0) being put forward by another routing process, i.e. OSPF, AD would be the tie breaker.
+However, if we did have the same route (0.0.0.0/0) being put forward by another routing process (i.e. OSPF) AD would be the tiebreaker.
 
 ## So how *does* BGP choose the best path then?
 Going back to our example; before our routers can install the route 0.0.0.0/0 into their routing table, it needs to be received by the BGP process which picks the route to install by the attributes that a route has.
 
 In our case, BGP has gone through the route [selection process](https://www.cisco.com/c/en/us/support/docs/ip/border-gateway-protocol-bgp/13753-25.html) and has reached step 7, where routes learnt by eBGP are preferred over routes learnt via iBGP.
 
-I won't cover how BGP makes its' route selection here as that is another topic entirely. All you need to know is that BGP's metric is actually a lot of different metrics (called attributes) that are compared one by one with other contender routes (other routes to the same destination received from other peers) until there is a difference and the tie is broken for a best route to be chosen.
+I won't cover how BGP makes its' route selection here as that is another topic entirely. All you need to know is that BGP's metric is actually a lot of different metrics (called attributes) that are compared one by one with other contender routes (other routes to the same destination received from other peers) until there is a difference and the best route to be chosen.
 
-To solve our problem, we can use the metric called 'local preference'. This one is number 2 on the list of attributes, meaning it is looked at second (after a Cisco proprietary attribute called weight) to see if it can be used as a tie breaker.
+To solve our problem, we can use the metric called 'local preference'. This one is number 2 on the list of attributes, meaning it is looked at second (after a Cisco proprietary attribute called weight) to see if it can be used as a tiebreaker.
 
 We can check the local preference of each route that we have received using the command `show ip bgp`:
 
@@ -180,7 +180,7 @@ Paths: (2 available, best #2, table default)
 
 Here we can see that the local preference of both routes received is 100 (lines 9 and 13), which is also the default local preference value for all BGP routes.
 
-In order to make the local preference for one of our routes higher than the other (a higher number is preferred with local preference), we would apply a route-map to the neighbor we want to change. For this problem I'll set the local preference of the peering to AS200 higher than 100 to prefer this over all other peers.
+In order to make the local preference for one of our routes higher than the other (a higher number is preferred with local preference), we would apply a route-map to the neighbour we want to change. For this problem, I'll set the local preference of the peering to AS200 higher than 100 to prefer this over all other peers.
 
 ```
 R1(config)#route-map set-lp-120
@@ -190,7 +190,7 @@ R1(config)#router bgp 100
 R1(config-router)#neighbor 192.168.0.3 route-map set-lp-120 in
 ```
 
-We need to clear the neighbor for this to take effect as well:
+We need to clear the neighbour for this to take effect as well:
 
 ```
 R1#clear ip bgp 192.168.0.3

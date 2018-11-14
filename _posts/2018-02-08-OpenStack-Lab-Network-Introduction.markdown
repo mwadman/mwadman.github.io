@@ -19,7 +19,7 @@ tags:
 
 # Overview
 
-This post is the first in a series that plans to document my progress through installing and configuring a OpenStack Lab, focusing primarily on the configuration of the network.
+This post is the first in a series that plans to document my progress through installing and configuring an OpenStack Lab, focusing predominantly on the configuration of the network components.
 
 The series will roughly look like the following:
 1. [Setup VirtualBox and virtual machines using Vagrant.](https://wadman.co.nz/2018/04/08/OpenStack-Lab-Network-Vagrant/)
@@ -28,9 +28,7 @@ The series will roughly look like the following:
   * [Part 2 - HTTP](https://wadman.co.nz/2018/08/03/OpenStack-Lab-Network-HTTP/)
 3. Configure network underlay (eBGP) using Ansible
 4. Configure network overlay (VXLAN with EVPN) using Ansible.
-5. Initial deployment of OpenStack servers using OpenStack-Ansible
-6. Configuration of OpenStack.
-7. Integration of OpenStack Neutron with our Cumulus switches.
+5. Deployment of OpenStack servers using OpenStack-Ansible
 
 If you're reading this sentence, the above is subject to change as I haven't yet written all posts yet.
 
@@ -40,13 +38,13 @@ I've recently taken an interest in a few different topics.
 These are, in no particular order:
 
 * OpenStack: A cloud computing software platform. [Neutron](https://wiki.openstack.org/wiki/Neutron), the networking project, is especially interesting.
-* Cumulus Linux: A network operating system that you can load onto 'whitebox' switches.
+* Cumulus Linux: A network operating system that you can load onto 'white box' switches.
 * Vagrant: Reproducible Virtual Machine deployment as code for labs.
 * ZTP (Zero Touch Provisioning): Used to provision a network device in the same way that a server can be, using DHCP.
 * VXLAN (Virtual Extensible LAN): A layer 2 overlay/tunnelling network protocol used primarily in data centres.
 * EVPN (Ethernet VPN): A MP-BGP address family used to route layer 2 addresses, commonly used in conjunction with VXLAN for routable layer 2 data centre fabrics.
 
-As I'm ~~a masochist~~ a person who likes to learn as much as possible when I'm not procrastinating, I thought it best to build a lab network that would use all of the above technologies and document my progress.
+As I'm ~~a masochist~~ a person who likes to learn as much as possible when I'm not procrastinating, I thought it best to build a lab network that would use all above technologies and document my progress.
 
 # Diagrams
 
@@ -56,7 +54,7 @@ The [management network diagram](https://www.draw.io/?lightbox=1&amp;highlight=0
 
 ![OpenStack Lab Management Network](/img/openstack-lab-management.png)
 
-The first network interface (as adapter 1 is Cumulus' management interface - "eth0") on all of the switches will be connected to a bridged adapter on my host machine (which also has access out to the internet).
+The first network interface (as adapter 1 is Cumulus' management interface - "eth0") on all switches will connect to a bridged adapter on my host machine (which also has access out to the internet).
 
 I'll also be creating three Ubuntu server 16.04 VM's - one ZTP server and two to take part in the OpenStack 'cloud'.
 Each of the server VM's will have its' first network interface connected to the bridge adapter too.
@@ -66,7 +64,7 @@ And the [production network diagram](https://www.draw.io/?lightbox=1&amp;highlig
 ![OpenStack Lab Production Network](/img/openstack-lab-network.png)
 
 After some initial research into both OpenStack and Cumulus (and using them together) I've decided to go with a leaf/spine network design.
-I've mainly chosen this because it quickly become the most common data centre network design.
+I've chosen this to become familiar with the most common data centre network design out there in 2018.
 
 The two OpenStack servers will each have two interfaces connected to two 'top of rack' switches, which they will use talk to using BGP to advertise their respective leaf switches.
 
@@ -74,6 +72,6 @@ I'll go over the more specific choices when we get around to configuring the swi
 
 # Conclusion
 
-This was just a quick post, meant as a foundation for the rest of the series and for me to document before I start configuring anything.
+This was a quick post, meant as a foundation for the rest of the series and for me to document before I start configuring anything.
 
 The [next post](https://wadman.co.nz/2018/04/08/OpenStack-Lab-Network-Vagrant/) in the series covers the use Vagrant to set up the environment in VirtualBox.

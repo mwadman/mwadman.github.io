@@ -15,16 +15,15 @@ tags:
 
 # Overview
 
-This post is the second in a series that plans to document my progress through installing and configuring a OpenStack Lab, using Cumulus switches for the network.
+This post is the second in a series that plans to document my progress through installing and configuring an OpenStack Lab, using Cumulus switches for the network.
 
 For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
-This post will cover the creation of our Virtual Machines in VirtualBox using Vagrant.  
-Vagrant (by HashiCorp) can be described as a tool to spin up reproducible development environments using most mainstream hypervisors.
+This post will cover the creation of our Virtual Machines in VirtualBox using Vagrant, a tool used to spin up reproducible development environments using most mainstream hypervisors.
 
 # Installation
 
-Installation of Vagrant on Ubuntu (my choice of desktop distribution) requires downloading the deb file from the [official website](https://www.vagrantup.com/downloads.html), or (as I recently found out) adding a community repository which is a kind of proxy-repository as it just redirects to the packages from HashiCorp themselves.  
+Installation of Vagrant on Ubuntu (my choice of desktop distribution) requires downloading the deb file from the [official website](https://www.vagrantup.com/downloads.html), or (as I recently found out) adding a community repository which is a kind of proxy-repository as it redirects to the packages from HashiCorp themselves.  
 For instructions on how to install Vagrant using this repo, visit the website [here](https://vagrant-deb.linestarve.com/).
 
 There is a Vagrant package that is available in the default repositories, but this isn't kept up to date.
@@ -40,14 +39,14 @@ You'll also need to start a new shell in order for this to take effect.
 
 &nbsp; <!--- Used to add a double line break --->
 
-Usually with Vagrant the next step would be to install a plugin to support the hypervisor (named a Vagrant 'provider') you are using, but VirtualBox is supported by default.
+With Vagrant, the next step might be to install a plugin to support the hypervisor (named a Vagrant 'provider') you are using, but VirtualBox is supported by default and so we don't need to do this.
 
 Now we need to add a 'Box', which is Vagrant's term for an image.
 The difference between Vagrant boxes and most other operating system images is that boxes are pre-made and configured, from which new virtual machines are cloned (as opposed to being installed by the user).
 
 For example, there is a [Cumulus VX Vagrant](https://app.vagrantup.com/boxes/search?utf8=%E2%9C%93&amp;sort=downloads&amp;provider=&amp;q=Cumulus) box available that we'll use in this project - named "CumulusCommunity/cumulus-vx". We'll add this now along with a Ubuntu 16.04 box.
 
->*Note that I'm not using the official Ubuntu box, as I ran into issues booting this on my machine (See the link [here](https://askubuntu.com/questions/771871/16-04-virtualbox-vm-from-vhd-file-hangs-at-non-blocking-pool-is-initialized), except those fixes didn't work in my case). There are other ubuntu boxes like geerlingguy/1604 that don't have the same issue.*
+>*Note that I'm not using the official Ubuntu box, as I ran into issues booting this on my machine (See the link [here](https://askubuntu.com/questions/771871/16-04-virtualbox-vm-from-vhd-file-hangs-at-non-blocking-pool-is-initialized), except those fixes didn't work in my case). There are other Ubuntu boxes like geerlingguy/1604 that don't have the same issue.*
 
 
 ```bash
@@ -55,9 +54,9 @@ $ vagrant box add CumulusCommunity/cumulus-vx
 $ vagrant box add geerlingguy/ubuntu1604
 ```
 
-During this step, if a box has more versions for more than just one provider it will prompt to ask which version to download.
+During this step, if a box has more versions for more than one provider it will prompt to ask which version to download.
 
-These boxes are stored globally for the user in the directory "~/.vagrant.d/boxes" and the currently installed boxes can be shown using the command below
+These boxes are stored globally for the user in the directory "~/.vagrant.d/boxes" and the currently installed boxes can be shown using the command below.
 
 ```bash
 $ vagrant box list
@@ -142,7 +141,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-With this configured, we could go ahead and provision then boot all of the machines we've specified using the `vagrant up` command, and then the `vagrant destroy` to delete the VM's.
+With this configured, we could go ahead and provision then boot the machines we've specified using the `vagrant up` command, and then the `vagrant destroy` to delete the VM's.
 
 However, there is still more configuration to do before we can be happy that our lab can be created in its entirety.
 
@@ -331,7 +330,7 @@ We'll use DHCP in this lab as we're going to be configuring a DHCP server for ZT
 
 This does mean that we'll need to boot and set an address on the ZTP server manually before provisioning any of the other hosts. I'll cover this in the next post.
 
-To make this easier down the road, lets set the MAC address of the first in VirtualBox statically. This is done in the `device.vm.provider` section of each guest, just like setting the RAM and the CPU:
+To make this easier down the road, lets set the MAC address of the first in VirtualBox statically. This is done in the `device.vm.provider` section of each guest, like setting the RAM and the CPU:
 
 ```ruby
       vb.customize ["modifyvm", :id, "--macaddress1", "080027000001"]
@@ -360,7 +359,7 @@ Note that the double underscore [isn't a typo.](https://www.vagrantup.com/docs/v
 
 &nbsp; <!--- Used to add a double line break --->
 
-After we add the above to all of or devices, our configuration should look like the below:
+After we add the above to for all devices, our configuration should look like the below:
 
 ```ruby
 # -*- mode: ruby -*-
@@ -653,7 +652,7 @@ end
 
 # Conclusion
 
-With this configuration file we have configured Vagrant to provision all of our VM's with all of the correct interface-to-adapter mappings.
+With this configuration file we have configured Vagrant to provision all our VM's with the correct interface-to-adapter mappings.
 
 While we could run `vagrant up` to ask Vagrant to provision and turn on the VM's, Vagrant won't finish as it will not be able to reach the hosts.  
 Before it can do so, we need to configure a DHCP server to hand out addresses, which I'll cover in the next post.
