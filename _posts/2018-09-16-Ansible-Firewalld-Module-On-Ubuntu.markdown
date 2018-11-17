@@ -32,7 +32,7 @@ firewalld:
 # Investigation
 
 After a quick google search, I found some [other](https://github.com/ansible/ansible/issues/24855) [people](https://github.com/ansible/ansible-modules-extras/issues/1282) have run into this as well.  
-Although there were some fixed noted in the above issues, none of them sat well with me as they required installing extra packages.
+Although there were some fixes noted in the above issues, none of them sat well with me as they required installing extra packages.
 
 There has to be a better way right?
 
