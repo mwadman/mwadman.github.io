@@ -296,7 +296,7 @@ end
 
 The syntax is quite simple;
 - `ansible.playbook` is where you tell Vagrant the path to the playbook you want to run.
-- `ansible.inventory_path` is needed if you're specifying Ansible variables outside of the Vagrantfile (which is possible, but I don't think it's very tidy as now you're crossing systems)
+- `ansible.inventory_path` is needed if you're specifying Ansible variables outside of the Vagrantfile.
 
 ## Vagrant Up!
 
