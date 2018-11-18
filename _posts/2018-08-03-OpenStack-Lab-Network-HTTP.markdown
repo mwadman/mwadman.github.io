@@ -382,8 +382,8 @@ In the next post, I'll move onto the configuration of the routing underlay of th
 
 ## References:
 
-[Cumulus Technical Documentation - Zero Touch Provisioning](https://docs.cumulusnetworks.com/display/DOCS/Zero+Touch+Provisioning+-+ZTP)
-[Cumulus Networks Example ZTP Scripts on Github](https://github.com/CumulusNetworks/example-ztp-scripts)
+[Cumulus Technical Documentation - Zero Touch Provisioning](https://docs.cumulusnetworks.com/display/DOCS/Zero+Touch+Provisioning+-+ZTP)  
+[Cumulus Networks Example ZTP Scripts on Github](https://github.com/CumulusNetworks/example-ztp-scripts)  
 [Vagrant - Ansible Provisioner](https://www.vagrantup.com/docs/provisioning/ansible.html)
 
 ## Versions used:
