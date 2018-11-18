@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "OpenStack Lab Network - HTTP Server (Part 2)"
+title:      "OpenStack Lab Network - ZTP Server (Part 2)"
 subtitle:   "Configuring a HTTP server with Ansible"
 date:       2018-08-03
 author:     "Michael Wadman"
