@@ -33,7 +33,7 @@ When I think of 'base', I think of everything that is done *before* any network 
 * Configuring NTP
 * Configuring Authentication
 
-The first one is definitely a new one for network devices as most network operating systems wouldn't allow for any packages to be installed, but as the switch is a linux device I'm going to install some cool packages.
+The first one is definitely a new one for network devices as most network operating systems wouldn't allow for any packages to be installed, but as the switch is a linux device I'm going to install some packages that I like.
 
 ## Ansible Playbook
 
@@ -100,11 +100,13 @@ We can (again) skip a step, in setting the DNS servers, this time because our sw
 
 To set the hostname with Ansible we use the `hostname` module and pass it the hostname that we've entered into our Ansible "hosts" file (another reason why this is important).
 
+<!-- {% raw %} -->
 ```yaml
 - name: Set hostname
   hostname:
     name: "{{ inventory_hostname }}"
 ```
+<!-- {% endraw %} -->
 
 ### Configuring NTP
 
@@ -157,8 +159,6 @@ ntp_servers:
   - "2.nz.pool.ntp.org"
   - "3.nz.pool.ntp.org"
 ```
-
-&nbsp; <!--- Used to add a double line break --->
 
 In the "handlers" folder we'll create "main.yml" and create a handler that tells the system to reload the timezone if a change is made.  
 On Debian this is done by telling dpkg to reconfigure the "tzdata" package.
@@ -230,18 +230,19 @@ However, Cumulus does include their own command-line-esque tool called "netd" wh
 This is controlled in the configuration file "/etc/netd.conf":
 
 ```ini
-# Control which users/groups are allowed to run "add", "del",
-# "clear", "abort", and "commit" commands.
-users_with_edit = root, cumulus
+# Control which users/groups are allowed to run "add", "del",  
+# "clear", "abort", and "commit" commands.  
+users_with_edit = root, cumulus  
 groups_with_edit = netedit
 
-# Control which users/groups are allowed to run "show" commands.
-users_with_show = root, cumulus
+# Control which users/groups are allowed to run "show" commands.  
+users_with_show = root, cumulus  
 groups_with_show = netshow, netedit
 ```
 
-Because I might want to play with this in the future, I'll the user "vagrant" into the "netedit" group using the "user" module in Ansible:
+Because I might want to play with this in the future, I'll add the user "vagrant" into the "netedit" group using the `user` module in Ansible:
 
+<!-- {% raw %} -->
 ```yaml
 - name: Allow administrator access to NCLU (net commands)
   user:
@@ -249,8 +250,9 @@ Because I might want to play with this in the future, I'll the user "vagrant" in
     groups: netedit
     append: yes
 ```
+<!-- {% endraw %} -->
 
-Remember that the variable `ansible_user` refers to the user we're using to log into the device with, which we set earlier in the "hosts" inventory file.
+Remember that the variable `ansible_user` refers to the user we're using to log into the device with, which we set in an earlier post in the "hosts" inventory file.
 
 # Testing
 
@@ -284,10 +286,11 @@ cumulus-spine02            : ok=6    changed=0    unreachable=0    failed=0
 
 ## Running with Vagrant
 
-Now that we've got a playbook written and running we can incorporate this into Vagrant so that it is run `vagrant up` is called, just like the ZTP playbook in the [last post](https://wadman.co.nz/2018/08/03/OpenStack-Lab-Network-HTTP/).
+Now that we've got a playbook written we can incorporate this into Vagrant.  
+The aim being that it is run when `vagrant up` is called, just like the ZTP playbook in the [last post](https://wadman.co.nz/2018/08/03/OpenStack-Lab-Network-HTTP/).  
+To recap, this simply requires the `.vm.provision` block somewhere in our Vagrantfile.
 
-To recap, this simply requires the `.vm.provision` block somewhere in our Vagrantfile.  
-However, unlike our previous post, we are running this playbook against multiple guest machines. We end up with two options to have the playbook run:
+However, unlike our previous post, we are running this playbook against multiple guest machines instead of just the one, so we end up with two options to have the playbook run:
 * Include the `.vm.provision` block each individual Cumulus guest block, and use the [limit](https://www.vagrantup.com/docs/provisioning/ansible_common.html#limit) option that the provisioner provides. This would run the playbook once for every machine specified and only against that one machine.
 * Include the `.vm.provision` block only once, in the last Cumulus guest block.
 
@@ -334,9 +337,9 @@ In the next post I'll dive into some of the network interface configuration of t
 
 ## Versions used:
 
-Desktop Machine: *kubuntu-18.04*
-VirtualBox: *virtualbox-5.2.10*
-Vagrant: *2.2.1*
-Cumulus VX Vagrant Box: *CumulusCommunity/cumulus-vx (virtualbox, 3.7.2)*
-Ubuntu Server Vagrant Box: *geerlingguy/ubuntu1604 (virtualbox, 1.2.3)*
+Desktop Machine: *kubuntu-18.04*  
+VirtualBox: *virtualbox-5.2.10*  
+Vagrant: *2.2.1*  
+Cumulus VX Vagrant Box: *CumulusCommunity/cumulus-vx (virtualbox, 3.7.2)*  
+Ubuntu Server Vagrant Box: *geerlingguy/ubuntu1604 (virtualbox, 1.2.3)*  
 Ansible: *2.7.2*
