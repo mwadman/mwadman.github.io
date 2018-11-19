@@ -27,6 +27,7 @@ The series will roughly look like the following:
   * [Part 1 - DHCP](https://wadman.co.nz/2018/06/08/OpenStack-Lab-Network-DHCP/)
   * [Part 2 - HTTP](https://wadman.co.nz/2018/08/03/OpenStack-Lab-Network-HTTP/)
 3. Configure network underlay (eBGP) using Ansible
+  * [Part 1 - Base Switch Configuration](https://wadman.co.nz/2018/11/18/OpenStack-Lab-Network-Switch-Base/)
 4. Configure network overlay (VXLAN with EVPN) using Ansible.
 5. Deployment of OpenStack servers using OpenStack-Ansible
 

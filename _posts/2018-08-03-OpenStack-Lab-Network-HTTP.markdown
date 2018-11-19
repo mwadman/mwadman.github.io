@@ -378,7 +378,7 @@ openstack-control | SUCCESS => {
 In this post we've covered how to write a ztp script for Cumulus Linux devices, and the configuration of a (very) simple web server to serve this to the switches as they boot.  
 We would now be able to run `vagrant up` and all hosts (including the Ubuntu hosts for OpenStack) would get an address via DHCP and the Cumulus Switches would also be updated on top of that.
 
-In the next post, I'll move onto the configuration of the routing underlay of the OpenStack network, which will be done on the Cumulus switches via Ansible.
+In the next post, I'll move onto the base configuration of the Cumulus switches using Ansible.
 
 ## References:
 
