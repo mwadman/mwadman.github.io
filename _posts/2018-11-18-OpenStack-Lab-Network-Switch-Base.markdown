@@ -33,7 +33,7 @@ When I think of 'base', I think of everything that is done *before* any network 
 * Configuring NTP
 * Configuring Authentication
 
-The first one is definitely a new one for network devices as most network operating systems wouldn't allow for any packages to be installed, but as the switch is a linux device I'm going to install some packages that I like.
+The first one is definitely a new one for network devices as most network operating systems wouldn't allow for any packages to be installed, but as the switch is a Linux device I'm going to install some packages that I like.
 
 ## Ansible Playbook
 
@@ -64,7 +64,7 @@ Within this directory, let's make a "main.yml" file and start adding tasks.
 
 ### Installing packages
 
-The first thing listed is installation of packages.  
+The first thing listed is the installation of packages.  
 Cumulus runs on top of Debian Jessie and uses "apt" as its' package manager, so we'll use the `apt` Ansible module for this step.
 
 With the `apt` module, I like to start with a base state of declaring the name of each package and then the state that I want Ansible to keep it at.  
@@ -161,7 +161,7 @@ ntp_servers:
 ```
 
 In the "handlers" folder we'll create "main.yml" and create a handler that tells the system to reload the timezone if a change is made.  
-On Debian this is done by telling dpkg to reconfigure the "tzdata" package.
+On Debian, this is done by telling dpkg to reconfigure the "tzdata" package.
 
 ```yaml
 ---
@@ -181,7 +181,7 @@ The task to configure NTP servers is going to look very similar to the timezone 
   notify: Restart NTP
 ```
 
-For the template I'm simply going to copy the existing configuration file, remove the extraneous comments, and then add in our NTP servers using a jinja 'for' loop.
+For the template, I'm simply going to copy the existing configuration file, remove the extraneous comments, and then add in our NTP servers using a jinja 'for' loop.
 
 <!-- {% raw %} -->
 ```jinja
@@ -287,7 +287,7 @@ cumulus-spine02            : ok=6    changed=0    unreachable=0    failed=0
 ## Running with Vagrant
 
 Now that we've got a playbook written we can incorporate this into Vagrant.  
-The aim being that it is run when `vagrant up` is called, just like the ZTP playbook in the [last post](https://wadman.co.nz/2018/08/03/OpenStack-Lab-Network-HTTP/).  
+The aim is that this will be run when `vagrant up` is called, just like the ZTP playbook in the [last post](https://wadman.co.nz/2018/08/03/OpenStack-Lab-Network-HTTP/).  
 To recap, this simply requires the `.vm.provision` block somewhere in our Vagrantfile.
 
 However, unlike our previous post, we are running this playbook against multiple guest machines instead of just the one, so we end up with two options to have the playbook run:
@@ -299,7 +299,7 @@ However, I can see that you might want to run this individually if there was a r
 
 &nbsp; <!--- Used to add a double line break --->
 
-This is what the Vagrantfile ends up looking like. I've included a skeleton of the last Cumulus machine's configuration to illustrate the provisioners' position in the configuration heirachy.
+This is what the Vagrantfile ends up looking like. I've included a skeleton of the last Cumulus machine's configuration to illustrate the provisioners' position in the configuration hierachy.
 
 ```ruby
 # Leaf 4
@@ -314,13 +314,13 @@ config.vm.define "cumulus_leaf04" do |device|
 end
 ```
 
-The only thing to note here is that we also need to use `ansible.limit` to specifiy all of the hosts we want to run against, as otherwise Vagrant will tell Ansible to only run this against the hosts which are in the same block; which in this case would be just "cumulus_leaf04".
+The only thing to note here is that we also need to use `ansible.limit` to specify all of the hosts we want to run against, as otherwise Vagrant will tell Ansible to only run this against the hosts which are in the same block; which in this case would be just "cumulus_leaf04".
 
 # Conclusion
 
 In this post I started an Ansible playbook to configure some basic functions on Cumulus hosts and covered how to include this in our Vagrantfile.
 
-In the next post I'll dive into some of the network interface configuration of the switches, including LLDP and PTMD (I'll cover what PTMD is as well) configuration on Cumulus.
+In the next post, I'll dive into the network interface configuration of the switches, including LLDP and PTMD (I'll cover what PTMD is as well) configuration on Cumulus.
 
 ## References:
 
