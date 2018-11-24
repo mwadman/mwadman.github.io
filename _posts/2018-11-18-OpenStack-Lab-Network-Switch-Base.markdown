@@ -47,17 +47,17 @@ In the directory "/etc/ansible/playbooks/" I'm creating another file, this time 
   become: true
   gather_facts: true
   roles:
-    - { role: cumulus-configure, tags: [ 'cumulus-configure' ] }
+    - { role: cumulus-base, tags: [ 'cumulus-because' ] }
 ```
 
-Super simple. We want to run a single role ("cumulus-configure", which we'll create next) on all of our switches to configure them.
+Super simple. We want to run a single role ("cumulus-base", which we'll create next) on all of our switches to configure them.
 
 ## Ansible Role
 
 To start, we'll create the roles "tasks" directory:
 
 ```bash
-$ mkdir -p /etc/ansible/roles/cumulus-configure/tasks/
+$ mkdir -p /etc/ansible/roles/cumulus-base/tasks/
 ```
 
 Within this directory, let's make a "main.yml" file and start adding tasks.
@@ -135,8 +135,8 @@ As we'll see going forward, the `copy` option would end up being incredibly mess
 This does mean that we need to create a few more directories and files for the template and handler.
 
 ```bash
-$ mkdir -p /etc/ansible/roles/cumulus-configure/templates
-$ mkdir -p /etc/ansible/roles/cumulus-configure/handlers
+$ mkdir -p /etc/ansible/roles/cumulus-base/templates
+$ mkdir -p /etc/ansible/roles/cumulus-base/handlers
 ```
 
 In the "templates" folder we'll create "timezone.j2", which will contain one variable which we'll call "timezone":
@@ -147,7 +147,7 @@ In the "templates" folder we'll create "timezone.j2", which will contain one var
 ```
 <!-- {% endraw %} -->
 
-We now need to tell Ansible what this variable should be set to. Because this is a widely applicable variable I'm going to put this into "/etc/ansible/group_vars/all/vars.yml" so that all hosts can reference it.  
+We now need to tell Ansible what this variable should be set to. Because this is a widely applicable variable (not just applicable to an openstack lab) I'm going to put this into "/etc/ansible/group_vars/all/vars.yml" so that all hosts can reference it.  
 I'll also add the NTP servers at the same time that we'll reference in the next task below.
 
 ```yaml
@@ -209,9 +209,21 @@ restrict 127.0.0.1
 restrict ::1
 
 # Specify interfaces, don't listen on switch ports
-interface listen eth0
+interface listen {{ cumulus_management_interface }}
 ```
 <!-- {% endraw %} -->
+
+On the last line we're telling the switch to listen for NTP only on the management interface.  
+We're going to be refering to the management interface again (in later posts), so I'm going to define a variable so I only have to change this in one place if the need arises.
+
+Because the variable is only relevant to the cumulus switches, I'm going to put this into a new file - "/etc/ansible/group_vars/openstack-cumulus/vars.yml":
+
+```yaml
+# Management
+cumulus_management_interface: "eth0"
+```
+
+&nbsp; <!--- Used to add a double line break --->
 
 The handler looks a little simpler for this task though, as we can use the "service" module to restart NTP on the hosts.
 

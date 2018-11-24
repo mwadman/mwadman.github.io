@@ -173,9 +173,7 @@ In the hosts file, we're going to wipe everything already present and create the
 
 ```config
 #################
-
 # OpenStack Lab #
-
 #################
 
 [openstack_lab:children]
@@ -184,32 +182,37 @@ openstack_ztp
 openstack_hosts
 
 [openstack_lab:vars]
-ansible_user=vagrant
-ansible_ssh_pass=vagrant
+ansible_user="vagrant"
+ansible_ssh_pass="vagrant"
+ansible_ssh_common_args="-o StrictHostKeyChecking=no"
+ansible_ssh_extra_args="-o StrictHostKeyChecking=no"
 
 # Cumulus Switches
-
 [openstack_cumulus:children]
 openstack_cumulus_spines
 openstack_cumulus_leafs
 
 [openstack_cumulus_spines]
-cumulus-spine01 ansible_host=192.168.11.201
-cumulus-spine02 ansible_host=192.168.11.202
+openstack-cumulus-spine01 ansible_host=192.168.11.201
+openstack-cumulus-spine02 ansible_host=192.168.11.202
 
-[openstack_cumulus_leafs]
-cumulus-leaf01 ansible_host=192.168.11.211
-cumulus-leaf02 ansible_host=192.168.11.212
-cumulus-leaf03 ansible_host=192.168.11.213
-cumulus-leaf04 ansible_host=192.168.11.214
+[openstack_cumulus_leafs:children]
+openstack_cumulus_leafgroup1
+openstack_cumulus_leafgroup2
+
+[openstack_cumulus_leafgroup1]
+openstack-cumulus-leaf01 ansible_host=192.168.11.211
+openstack-cumulus-leaf02 ansible_host=192.168.11.212
+
+[openstack_cumulus_leafgroup2]
+openstack-cumulus-leaf03 ansible_host=192.168.11.213
+openstack-cumulus-leaf04 ansible_host=192.168.11.214
 
 # ZTP Server
-
 [openstack_ztp]
 cumulus-ztp ansible_host=192.168.11.221
 
 # OpenStack Hosts
-
 [openstack_hosts]
 openstack-control ansible_host=192.168.11.231
 openstack-compute ansible_host=192.168.11.232
