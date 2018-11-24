@@ -90,7 +90,7 @@ The only difference when it comes to Cumulus is that "ifupdown" is replaced with
 
 Let's have a look at the default "/etc/network/interfaces" file on a Cumulus box:
 
-```ini
+```config
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
 
