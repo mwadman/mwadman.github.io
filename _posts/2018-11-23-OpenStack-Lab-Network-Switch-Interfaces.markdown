@@ -20,7 +20,7 @@ This post is the sixth in a series that plans to document my progress through in
 
 For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
-In the last post, we configured the base configuration of our Cumulus switches using Ansible.
+In the last post, we finished the base configuration of our Cumulus switches using Ansible.
 This post will cover the configuration of network interfaces on Cumulus switches.
 
 # Configuration
