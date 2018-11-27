@@ -54,7 +54,7 @@ Creating the role directory:
 $ mkdir -p /etc/ansible/roles/cumulus-interface/tasks/
 ```
 
-And adding this to our playbook - "openstack.cumulus.yml":
+And adding this to our playbook - "openstack-cumulus.yml":
 
 ```yaml
 ---
