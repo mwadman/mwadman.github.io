@@ -33,6 +33,7 @@ What do we need to do before we bring up OSPF or BGP? I can think of a few thing
 * Setting the physical properties of required ports
 * Setting the MTU of all interfaces
 * Naming/Describing all interfaces
+* Configuring IP addresses on interfaces
 * Bringing up LLDP
 
 Outside of our topology, you might also include some other steps. For example:
@@ -41,7 +42,6 @@ Outside of our topology, you might also include some other steps. For example:
 * Configuration of STP
 * Configuring and testing [Cumulus PTM](https://docs.cumulusnetworks.com/display/DOCS/Prescriptive+Topology+Manager+-+PTM)
 * Configuring 802.1X for port authentication
-* Configuring IP addresses on interfaces (We're going to be using [BGP unnumbered](https://docs.cumulusnetworks.com/display/DOCS/Border+Gateway+Protocol+-+BGP#BorderGatewayProtocol-BGP-ConfigureBGPUnnumberedInterfaces) in our topology, so we can skip this step)
 
 ## Ansible Playbook/Role
 
@@ -300,6 +300,48 @@ Let's come back to the logic for the loop again and expand on it to cover the al
     * Write "mtu" followed by what the variable "cumulus_mtu" is set to.
     * If the key has a value inside of it with the name of "alias" then write "alias" followed what the value is set to.
 
+### Interface IP Addresses
+
+The last interface configuration change we'll make is to add an IP address to each interface.  
+This won't be just any IP address though, as we're going to reuse the loopback address so that we can take advantage of [OSPF unnumbered](https://docs.cumulusnetworks.com/display/DOCS/Open+Shortest+Path+First+-+OSPF+-+Protocol#OpenShortestPathFirst-OSPF-Protocol-ospf_unnumUnnumberedInterfaces).
+
+I'll cover this in detail in the next post on routing configuration.  
+
+<!-- {% raw %} -->
+```jinja
+#########################
+# Switchport Interfaces #
+#########################
+{% for port, value in cumulus_switchgroup_switchports.items() | sort %}
+auto {{ port }}
+iface {{ port }}
+    mtu {{ cumulus_mtu }}
+{% if cumulus_routing_ospf_unnumbered == true %}
+    address {{ cumulus_host_loopback_address }}
+{% endif %}
+{% if 'alias' in value %}
+{# Description of the interface #}
+    alias {{ value.alias }}
+{% endif %}
+
+{% endfor %}
+```
+<!-- {% endraw %} -->
+
+In "/etc/ansible/group_vars/openstack_cumulus/vars.yml", we'll make the variable "cumulus_routing_ospf_unnumbered" and set this to `True`:
+
+```yaml
+---
+# Management
+cumulus_management_interface: "eth0"
+
+# Switchports
+cumulus_mtu: "9216"
+
+# Routing
+cumulus_routing_ospf_unnumbered: True
+```
+
 ## Configuring LLDP
 
 LLDP on Cumulus is implemented with [lldpd](https://vincentbernat.github.io/lldpd/) and is enabled by default on all interfaces.
@@ -339,7 +381,7 @@ As this is a lab, where I might be changing connections at any time, I'm going t
 
 In this post, I covered some basic configuration of interfaces on a Cumulus switch.
 
-In the next post, I'll start to dive into the BGP configuration required for our OpenStack deployment.
+In the next post, I'll start to dive into the routing configuration required for our OpenStack deployment.
 
 ## References:
 
@@ -348,8 +390,8 @@ In the next post, I'll start to dive into the BGP configuration required for our
 [Debian Network Configuration](https://wiki.debian.org/NetworkConfiguration)  
 [Cumulus Linux - Interface Configuration](https://docs.cumulusnetworks.com/display/DOCS/Interface+Configuration+and+Management)  
 [Cumulus Linux - Switchport Attributes](https://docs.cumulusnetworks.com/display/DOCS/Switch+Port+Attributes)  
-[Cumulus Linux - LLDP](https://docs.cumulusnetworks.com/display/DOCS/Link+Layer+Discovery+Protocol)  
-[Cumulus Linux - BGP Unnumbered](https://docs.cumulusnetworks.com/display/DOCS/Border+Gateway+Protocol+-+BGP#BorderGatewayProtocol-BGP-ConfigureBGPUnnumberedInterfaces)  
+[Cumulus Linux - OSPF Unnumbered](https://docs.cumulusnetworks.com/display/DOCS/Open+Shortest+Path+First+-+OSPF+-+Protocol#OpenShortestPathFirst-OSPF-Protocol-ospf_unnumUnnumberedInterfaces)  
+[Cumulus Linux - LLDP](https://docs.cumulusnetworks.com/display/DOCS/Link+Layer+Discovery+Protocol)   
 
 ## Versions used:
 
