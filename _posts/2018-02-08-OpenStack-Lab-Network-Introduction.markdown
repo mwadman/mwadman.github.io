@@ -26,9 +26,10 @@ The series will roughly look like the following:
 2. Install and configure ZTP server and boot switches.
   * [Part 1 - DHCP](https://wadman.co.nz/2018/06/08/OpenStack-Lab-Network-DHCP/)
   * [Part 2 - HTTP](https://wadman.co.nz/2018/08/03/OpenStack-Lab-Network-HTTP/)
-3. Configure network underlay (eBGP) using Ansible
+3. Configure network switches using Ansible
   * [Part 1 - Base Switch Configuration](https://wadman.co.nz/2018/11/18/OpenStack-Lab-Network-Switch-Base/)
   * [Part 2 - Interface Configuration](https://wadman.co.nz/2018/11/23/OpenStack-Lab-Network-Switch-Interfaces/)
+  * [Part 3 - Routing Configuration](https://wadman.co.nz/2018/12/09/OpenStack-Lab-Network-Switch-Routing/)
 4. Configure network overlay (VXLAN with EVPN) using Ansible.
 5. Deployment of OpenStack servers using OpenStack-Ansible
 
@@ -68,7 +69,7 @@ And the [production network diagram](https://www.draw.io/?lightbox=1&amp;highlig
 After some initial research into both OpenStack and Cumulus (and using them together) I've decided to go with a leaf/spine network design.
 I've chosen this to become familiar with the most common data centre network design out there in 2018.
 
-The two OpenStack servers will each have two interfaces connected to two 'top of rack' switches, which they will use talk to using BGP to advertise their respective leaf switches.
+The two OpenStack servers will each have two interfaces connected to two 'top of rack' (leaf) switches, through which they will talk OSPF and BGP.
 
 I'll go over the more specific choices when we get around to configuring the switches.
 
