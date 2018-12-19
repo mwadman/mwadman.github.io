@@ -238,15 +238,12 @@ This is set by adding an indented line of "mtu *value*" under the "iface *port*"
 
 Now that we have a base template for each switch port, this shouldn't be too hard.  
 First, let's create a variable for the MTU, which will be shared across all ports.  
-In "/etc/ansible/group_vars/openstack_cumulus/vars.yml", we'll make the variable "cumulus_mtu":
+In "/etc/ansible/group_vars/openstack_lab/vars.yml", we'll make the variable "openstack_lab_mtu":
 
 ```yaml
----
-# Management
-cumulus_management_interface: "eth0"
-
-# Switchports
-cumulus_mtu: "9216"
+...
+# Network Interfaces
+openstack_lab_mtu: 9000
 ```
 
 Next is to include it in the template:
@@ -259,7 +256,7 @@ Next is to include it in the template:
 {% for port, value in cumulus_switchgroup_switchports.items() | sort %}
 auto {{ port }}
 iface {{ port }}
-    mtu {{ cumulus_mtu }}
+    mtu {{ openstack_lab_mtu }}
 {% endfor %}
 ```
 <!-- {% endraw %} -->
@@ -283,7 +280,7 @@ That way we can use this in our template, which now becomes:
 {% for port, value in cumulus_switchgroup_switchports.items() | sort %}
 auto {{ port }}
 iface {{ port }}
-    mtu {{ cumulus_mtu }}
+    mtu {{ openstack_lab_mtu }}
 {% if 'alias' in value %}
 {# Description of the interface #}
     alias {{ value.alias }}
@@ -297,7 +294,7 @@ Let's come back to the logic for the loop again and expand on it to cover the al
 * For every key (ports/"swp*X*" entries) in the dictionary "cumulus_switchgroup_switchports", and their associated values:
     * First sort them, so that they are being iterated over in numerical order.
     * Write the key string into the file, first after "auto" and again after "iface".
-    * Write "mtu" followed by what the variable "cumulus_mtu" is set to.
+    * Write "mtu" followed by what the variable "openstack_lab_mtu" is set to.
     * If the key has a value inside of it with the name of "alias" then write "alias" followed what the value is set to.
 
 ### Interface IP Addresses
@@ -315,7 +312,7 @@ I'll cover this in detail in the next post on routing configuration.
 {% for port, value in cumulus_switchgroup_switchports.items() | sort %}
 auto {{ port }}
 iface {{ port }}
-    mtu {{ cumulus_mtu }}
+    mtu {{ openstack_lab_mtu }}
 {% if cumulus_routing_ospf_unnumbered == true %}
     address {{ cumulus_host_loopback_address }}
 {% endif %}
@@ -334,9 +331,6 @@ In "/etc/ansible/group_vars/openstack_cumulus/vars.yml", we'll make the variable
 ---
 # Management
 cumulus_management_interface: "eth0"
-
-# Switchports
-cumulus_mtu: "9216"
 
 # Routing
 cumulus_routing_ospf_unnumbered: True

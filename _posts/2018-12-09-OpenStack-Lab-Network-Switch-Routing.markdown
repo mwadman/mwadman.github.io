@@ -272,9 +272,6 @@ Lastly, because we want our switches to run OSPF and BGP, we'll set "cumulus_rou
 # Management
 cumulus_management_interface: "eth0"
 
-# Switchports
-cumulus_mtu: "9216"
-
 # OSPF Routing
 cumulus_routing_ospf_unnumbered: True
 cumulus_routing_ospf_enabled: True
@@ -664,7 +661,7 @@ We'll cover some good BGP (and EVPN) checks in a later post where we configure F
 
 In this (quite lengthy - sorry!) post, we've configured the routing protocols needed for our Cumulus switches to support the OpenStack network.
 
-In the next post, I'll start to dive into the routing configuration required on our OpenStack hosts, using FRR as well.
+In the next post, I'll start to dive into the network interface configuration required on our OpenStack hosts, before following up with the routing configuration using FRR.
 
 ## References:
 
