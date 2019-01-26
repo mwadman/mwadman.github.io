@@ -667,8 +667,8 @@ In the next post, I'll start to dive into the network interface configuration re
 
 ## References:
 
-[Ansible - "template" module](https://docs.ansible.com/ansible/2.7/plugins/lookup/template.html)  
-[Ansible - "service" module](https://docs.ansible.com/ansible/2.7/modules/service_module.html)  
+[Ansible - "template" module](https://docs.ansible.com/ansible/latest/plugins/lookup/template.html)  
+[Ansible - "service" module](https://docs.ansible.com/ansible/latest/modules/service_module.html)  
 [Jinja - Inline if Statements](http://jinja.pocoo.org/docs/2.10/templates/#if-expression)  
 [Jinja - Multi-line expressions](http://jinja.pocoo.org/docs/2.10/templates/#line-statements)  
 [Cumulus Linux - FRR Configuration](https://docs.cumulusnetworks.com/display/DOCS/Configuring+FRRouting)  

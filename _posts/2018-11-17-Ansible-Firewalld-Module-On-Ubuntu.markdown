@@ -36,7 +36,7 @@ Although there were some fixes noted in the above issues, none of them sat well 
 
 There has to be a better way right?
 
-Hunting further took me back to the Ansible [firewalld module documentation](https://docs.ansible.com/ansible/2.7/modules/firewalld_module.html), which includes the following notes:
+Hunting further took me back to the Ansible [firewalld module documentation](https://docs.ansible.com/ansible/latest/modules/firewalld_module.html), which includes the following notes:
 
 > Not tested on any Debian based system.
 

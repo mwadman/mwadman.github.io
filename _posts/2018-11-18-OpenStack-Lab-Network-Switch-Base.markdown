@@ -336,12 +336,12 @@ In the next post, I'll dive into the network interface configuration of the swit
 
 ## References:
 
-[Ansible - "apt" module](https://docs.ansible.com/ansible/2.7/modules/apt_module.html)  
-[Ansible - "hostname" module](https://docs.ansible.com/ansible/2.7/modules/hostname_module.html)  
-[Ansible - "template" module](https://docs.ansible.com/ansible/2.7/plugins/lookup/template.html)  
-[Ansible - "command" module](https://docs.ansible.com/ansible/2.7/modules/command_module.html)  
-[Ansible - "service" module](https://docs.ansible.com/ansible/2.7/modules/service_module.html)  
-[Ansible - "user" module](https://docs.ansible.com/ansible/2.7/modules/user_module.html)  
+[Ansible - "apt" module](https://docs.ansible.com/ansible/latest/modules/apt_module.html)  
+[Ansible - "hostname" module](https://docs.ansible.com/ansible/latest/modules/hostname_module.html)  
+[Ansible - "template" module](https://docs.ansible.com/ansible/latest/plugins/lookup/template.html)  
+[Ansible - "command" module](https://docs.ansible.com/ansible/latest/modules/command_module.html)  
+[Ansible - "service" module](https://docs.ansible.com/ansible/latest/modules/service_module.html)  
+[Ansible - "user" module](https://docs.ansible.com/ansible/latest/modules/user_module.html)  
 [Vagrant - Ansible Provisioner](https://www.vagrantup.com/docs/provisioning/ansible.html)  
 [Cumulus Linux - Setting the hostname](https://docs.cumulusnetworks.com/display/DOCS/Quick+Start+Guide#QuickStartGuide-ConfiguretheHostnameandTimezone)  
 [Cumulus Linux - Setting Date and Time](https://docs.cumulusnetworks.com/display/DOCS/Setting+Date+and+Time)  

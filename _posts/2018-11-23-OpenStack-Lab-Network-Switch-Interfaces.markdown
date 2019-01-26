@@ -379,8 +379,8 @@ In the next post, I'll start to dive into the routing configuration required for
 
 ## References:
 
-[Ansible - "template" module](https://docs.ansible.com/ansible/2.7/plugins/lookup/template.html)  
-[Ansible - "service" module](https://docs.ansible.com/ansible/2.7/modules/service_module.html)  
+[Ansible - "template" module](https://docs.ansible.com/ansible/latest/plugins/lookup/template.html)  
+[Ansible - "service" module](https://docs.ansible.com/ansible/latest/modules/service_module.html)  
 [Debian Network Configuration](https://wiki.debian.org/NetworkConfiguration)  
 [Cumulus Linux - Interface Configuration](https://docs.cumulusnetworks.com/display/DOCS/Interface+Configuration+and+Management)  
 [Cumulus Linux - Switchport Attributes](https://docs.cumulusnetworks.com/display/DOCS/Switch+Port+Attributes)  
