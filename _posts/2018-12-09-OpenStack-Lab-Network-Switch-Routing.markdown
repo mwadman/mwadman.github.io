@@ -9,6 +9,8 @@ tags:
     - OpenStack
     - Networking
     - BGP
+    - OSPF
+    - EVPN
     - Ansible
     - Cumulus
     - Vagrant
