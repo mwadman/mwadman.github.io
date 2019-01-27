@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "OpenStack Lab Network - Host Network Interface"
+title:      "OpenStack Lab Network - Host Network Interfaces"
 subtitle:   "Configuring network interfaces on OpenStack hosts"
 date:       2019-01-26
 author:     "Michael Wadman"
