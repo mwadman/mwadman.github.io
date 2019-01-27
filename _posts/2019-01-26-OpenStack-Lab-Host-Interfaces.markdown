@@ -2,7 +2,7 @@
 layout:     post
 title:      "OpenStack Lab Network - Host Network Interface"
 subtitle:   "Configuring network interfaces on OpenStack hosts"
-date:       2018-01-26
+date:       2019-01-26
 author:     "Michael Wadman"
 catalog:    true
 tags:
@@ -11,6 +11,7 @@ tags:
     - Ansible
     - Vagrant
     - VirtualBox
+    - Ubuntu
 ---
 
 # Overview
