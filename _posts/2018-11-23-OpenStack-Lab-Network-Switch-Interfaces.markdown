@@ -96,11 +96,11 @@ Let's have a look at the default "/etc/network/interfaces" file on a Cumulus box
 
 source /etc/network/interfaces.d/*.intf
 
-# The loopback network interface
+# The loopback network interface  
 auto lo
 iface lo inet loopback
 
-# The primary network interface
+# The primary network interface  
 auto eth0
 iface eth0 inet dhcp
 ```

@@ -74,6 +74,7 @@ The only other option I'll include is `cache_valid_time` and set this to somethi
 
 I'm just going to install some troubleshooting packages, "bwm-ng" and "mtr", but because we added the Debian repositories to apt as a part of our ZTP script we could install any others that we saw fit.
 
+<!-- {% raw %} -->
 ```yaml
 ---
 - name: Install apt packages
@@ -87,6 +88,7 @@ I'm just going to install some troubleshooting packages, "bwm-ng" and "mtr", but
   tags:
     - packages
 ```
+<!-- {% endraw %} -->
 
 ### Configuring DNS
 
