@@ -378,5 +378,5 @@ Desktop Machine: *kubuntu-18.04*
 VirtualBox: *virtualbox-5.2.18*  
 Vagrant: *2.2.3*  
 Cumulus VX Vagrant Box: *CumulusCommunity/cumulus-vx (virtualbox, 3.7.2)*  
-Ubuntu Server Vagrant Box: *geerlingguy/ubuntu1604 (virtualbox, 1.2.5)*  
+Ubuntu Server Vagrant Box: *geerlingguy/ubuntu1804 (virtualbox, 1.0.6)*  
 Ansible: *2.7.6*

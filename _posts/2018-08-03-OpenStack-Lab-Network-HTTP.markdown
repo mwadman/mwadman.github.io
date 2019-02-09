@@ -275,7 +275,7 @@ To solve this we need to enter a `.vm.provision` block into our Vagrantfile, and
 
 # ZTP VM
 config.vm.define "openstack_ztp" do |device|
-  device.vm.box = "geerlingguy/ubuntu1604"
+  device.vm.box = "geerlingguy/ubuntu1804"
   device.ssh.host = "192.168.11.221"
 
   # VirtualBox Config
@@ -392,5 +392,5 @@ Desktop Machine: *kubuntu-18.04*
 VirtualBox: *virtualbox-5.2.10*
 Vagrant: *2.1.2*
 Cumulus VX Vagrant Box: *CumulusCommunity/cumulus-vx (virtualbox, 3.6.2)*
-Ubuntu Server Vagrant Box: *geerlingguy/ubuntu1604 (virtualbox, 1.2.1)*
+Ubuntu Server Vagrant Box: *geerlingguy/ubuntu1804 (virtualbox, 1.0.6)*
 Ansible: *2.6.2*

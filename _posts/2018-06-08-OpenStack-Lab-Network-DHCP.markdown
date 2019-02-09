@@ -102,12 +102,11 @@ For one last test, we'll ssh into this from the host machine:
 ```bash
 $ ssh 192.168.11.221 -l vagrant
 vagrant@192.168.11.221s password:
-Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.4.0-116-generic x86_64)
+Welcome to Ubuntu 18.04.1 LTS (GNU/Linux 4.15.0-29-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
  * Management:     https://landscape.canonical.com
  * Support:        https://ubuntu.com/advantage
-Last login: Sat Jul 28 00:54:32 2018 from 192.168.11.100
 vagrant@vagrant:~$ exit
 ```
 
@@ -479,5 +478,5 @@ Desktop Machine: *kubuntu-18.04*
 VirtualBox: *virtualbox-5.2.10*  
 Vagrant: *2.1.2*  
 Cumulus VX Vagrant Box: *CumulusCommunity/cumulus-vx (virtualbox, 3.6.2)*  
-Ubuntu Server Vagrant Box: *geerlingguy/ubuntu1604 (virtualbox, 1.2.1)*  
+Ubuntu Server Vagrant Box: *geerlingguy/ubuntu1804 (virtualbox, 1.0.6)*  
 Ansible: *2.6.2*  

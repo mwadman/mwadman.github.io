@@ -44,14 +44,14 @@ With Vagrant, the next step might be to install a plugin to support the hypervis
 Now we need to add a 'Box', which is Vagrant's term for an image.
 The difference between Vagrant boxes and most other operating system images is that boxes are pre-made and configured, from which new virtual machines are cloned (as opposed to being installed by the user).
 
-For example, there is a [Cumulus VX Vagrant](https://app.vagrantup.com/boxes/search?utf8=%E2%9C%93&amp;sort=downloads&amp;provider=&amp;q=Cumulus) box available that we'll use in this project - named "CumulusCommunity/cumulus-vx". We'll add this now along with a Ubuntu 16.04 box.
+For example, there is a [Cumulus VX Vagrant](https://app.vagrantup.com/boxes/search?utf8=%E2%9C%93&amp;sort=downloads&amp;provider=&amp;q=Cumulus) box available that we'll use in this project - named "CumulusCommunity/cumulus-vx". We'll add this now along with a Ubuntu 18.04 box.
 
->*Note that I'm not using the official Ubuntu box, as I ran into issues booting this on my machine (See the link [here](https://askubuntu.com/questions/771871/16-04-virtualbox-vm-from-vhd-file-hangs-at-non-blocking-pool-is-initialized), except those fixes didn't work in my case). There are other Ubuntu boxes like geerlingguy/1604 that don't have the same issue.*
+>*Note that I'm not using the official Ubuntu box, as I ran into issues booting this on my machine (See the link [here](https://askubuntu.com/questions/771871/16-04-virtualbox-vm-from-vhd-file-hangs-at-non-blocking-pool-is-initialized), except those fixes didn't work in my case). There are other Ubuntu boxes like geerlingguy/1804 that don't have the same issue.*
 
 
 ```bash
 $ vagrant box add CumulusCommunity/cumulus-vx
-$ vagrant box add geerlingguy/ubuntu1604
+$ vagrant box add geerlingguy/ubuntu1804
 ```
 
 During this step, if a box has more versions for more than one provider it will prompt to ask which version to download.
@@ -61,7 +61,7 @@ These boxes are stored globally for the user in the directory "~/.vagrant.d/boxe
 ```bash
 $ vagrant box list
 CumulusCommunity/cumulus-vx (virtualbox, 3.6.2)
-geerlingguy/ubuntu1604      (virtualbox, 1.2.1)
+geerlingguy/ubuntu1804      (virtualbox, 1.0.6)
 ```
 
 # Setup
@@ -102,7 +102,7 @@ We'll do one block for each of the VM's we need - 2 spine switches, 4 leaf switc
 Vagrant.configure("2") do |config|
  # ZTP Box
  config.vm.define "openstack_ztp" do |device|
-	 device.vm.box = "geerlingguy/ubuntu1604"
+	 device.vm.box = "geerlingguy/ubuntu1804"
  end
 
  # Cumulus Boxes
@@ -132,11 +132,11 @@ Vagrant.configure("2") do |config|
 
  # OpenStack Boxes
  config.vm.define "openstack_control" do |device|
-	 device.vm.box = "geerlingguy/ubuntu1604"
+	 device.vm.box = "geerlingguy/ubuntu1804"
  end
 
  config.vm.define "openstack_compute" do |device|
-	 device.vm.box = "geerlingguy/ubuntu1604"
+	 device.vm.box = "geerlingguy/ubuntu1804"
  end
 end
 ```
@@ -204,7 +204,7 @@ We'll apply the configuration completed above to the rest of our machines and we
 ```ruby
 # ZTP Box
 config.vm.define "openstack_ztp" do |device|
- device.vm.box = "geerlingguy/ubuntu1604"
+ device.vm.box = "geerlingguy/ubuntu1804"
 
  device.vm.provider "virtualbox" do |vb|
 	 vb.name = "ztp-server"
@@ -276,7 +276,7 @@ config.vm.define "cumulus_spine01" do |device|
 
  # OpenStack Boxes
  config.vm.define "openstack_control" do |device|
-	 device.vm.box = "geerlingguy/ubuntu1604"
+	 device.vm.box = "geerlingguy/ubuntu1804"
 
 	 device.vm.provider "virtualbox" do |vb|
 		 vb.name = "openstack_control"
@@ -286,7 +286,7 @@ config.vm.define "cumulus_spine01" do |device|
  end
 
  config.vm.define "openstack_compute" do |device|
-	 device.vm.box = "geerlingguy/ubuntu1604"
+	 device.vm.box = "geerlingguy/ubuntu1804"
 
 	 device.vm.provider "virtualbox" do |vb|
 		 vb.name = "openstack_compute"
@@ -388,7 +388,7 @@ Vagrant.configure("2") do |config|
 
   # ZTP VM
   config.vm.define "openstack_ztp" do |device|
-    device.vm.box = "geerlingguy/ubuntu1604"
+    device.vm.box = "geerlingguy/ubuntu1804"
     device.ssh.host = "192.168.11.221"
 
     # VirtualBox Config
@@ -600,7 +600,7 @@ Vagrant.configure("2") do |config|
 
   # OpenStack Control
   config.vm.define "openstack_control" do |device|
-    device.vm.box = "geerlingguy/ubuntu1604"
+    device.vm.box = "geerlingguy/ubuntu1804"
     device.ssh.host = "192.168.11.231"
 
     # Internal Networks
@@ -625,7 +625,7 @@ Vagrant.configure("2") do |config|
 
   # OpenStack Compute
   config.vm.define "openstack_compute" do |device|
-    device.vm.box = "geerlingguy/ubuntu1604"
+    device.vm.box = "geerlingguy/ubuntu1804"
     device.ssh.host = "192.168.11.232"
 
     # Internal Networks
@@ -672,4 +672,4 @@ Desktop Machine: *kubuntu-18.04*
 VirtualBox: *virtualbox-5.2.10*  
 Vagrant: *2.1.2*  
 Cumulus VX Vagrant Box: *CumulusCommunity/cumulus-vx (virtualbox, 3.6.2)*  
-Ubuntu Server Vagrant Box: *geerlingguy/ubuntu1604 (virtualbox, 1.2.1)*   
+Ubuntu Server Vagrant Box: *geerlingguy/ubuntu1804 (virtualbox, 1.0.6)*   
