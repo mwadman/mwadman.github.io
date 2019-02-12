@@ -409,15 +409,17 @@ router bgp {{ ibgp_autonomous_system }} view iBGP-RR
 {# Defines a peer group where common configuration to be defined for all peers #}
   neighbor iBGP-RR-Clients peer-group
   neighbor iBGP-RR-Clients remote-as internal
+{# Forms a neighborship with the other spine switches #}
+{% for spine in groups['openstack_cumulus_spines'] | difference([inventory_hostname]) %}
+  neighbor {{ hostvars[spine].cumulus_host_loopback_address }} peer-group iBGP-RR-Clients
+{% endfor %}
 {# Enables the BGP speaker to peer with all hosts within a network range #}
   bgp listen range {{ cumulus_spines_bgp_RR_network }} peer-group iBGP-RR-Clients
-  address-family ipv4 unicast
-    neighbor iBGP-RR-Clients activate
-  exit-address-family
 {% if cumulus_routing_bgp_evpn_enabled == true %}
 {# Enables advetisement of EVPN address family #}
   address-family l2vpn evpn
     neighbor iBGP-RR-Clients activate
+    neighbor iBGP-RR-Clients route-reflector-client
   exit-address-family
 {% endif %}
 {% endif %}
@@ -445,6 +447,8 @@ In an OpenStack EVPN environment, where the route reflectors are going to be lea
 The next two lines create a BGP neighbour group named "iBGP-RR-Clients". Neighbour groups allow for easier configuration of neighbours with common settings.  
 The `peer-group` line simply defines the neighbour group.  
 The `remote-as internal` line tells BGP that all neighbours in the group will be iBGP neighbours.
+
+The next for loop, setting the line `neighbor ... peer-group iBGP-RR-Clients`, configures a BGP neighborship manually with the other spine switches in the topology (in our case, just the other 1).
 
 `bgp listen range` allows the BGP speakers to form peerings with any host in the defined network.  
 For this, we're referencing a new variable which will house the range that we expect the clients (OpenStack hosts) loopbacks to be inside - 192.168.11.0/24.
