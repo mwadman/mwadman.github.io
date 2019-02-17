@@ -19,7 +19,7 @@ tags:
 
 # Overview
 
-This post is the seventh in a series that plans to document my progress through installing and configuring an OpenStack Lab, using Cumulus switches for the network.
+This post is the seventh in a series that plans to document my progress through installing and configuring a small OpenStack Lab.
 
 For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
