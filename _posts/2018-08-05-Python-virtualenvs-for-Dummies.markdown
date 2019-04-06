@@ -21,20 +21,21 @@ However, installing and using virtualenv seemed far too complicated, especially 
 
 This post is meant as a "Python Virtualenv for Dummies"; both so that I have a quick document to refer back to, and hopefully to help those as helpless as I am.
 
-> Note that this post uses an installation of Ubuntu 18.04 with Python v2.7, but should hopefully be global (both OS and Python version wise).
+> Note that this post uses an installation of Ubuntu 18.04 with Python v3.6.
+> If you were wanting to install Virtualenv for Python 2 instead, simply remove the "3" off the end of the install commands.
 
 # Installation
 
 First up is installing python and pip, both of which are done through apt:
 
 ```bash
-$ sudo apt-get install python python-pip
+$ sudo apt-get install python3 python3-pip
 ```
 
 Next is installing virtualenv using pip. This should be the only pip package you install globally (using sudo):
 
 ```bash
-$ sudo pip install virtualenv
+$ sudo pip3 install virtualenv
 ```
 
 # Using Virtualenv
