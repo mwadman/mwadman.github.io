@@ -415,11 +415,6 @@ router bgp {{ ibgp_autonomous_system }} view iBGP-RR
 {% endfor %}
 {# Enables the BGP speaker to peer with all hosts within a network range #}
   bgp listen range {{ cumulus_spines_bgp_RR_network }} peer-group iBGP-RR-Clients
-{# Enables advertisement of OpenStack bridges #}
-  address-family ipv4 unicast
-    neighbor iBGP-RR-Clients activate
-    neighbor iBGP-RR-Clients route-reflector-client
-  exit-address-family
 {% if cumulus_routing_bgp_evpn_enabled == true %}
 {# Enables advetisement of EVPN address family #}
   address-family l2vpn evpn

@@ -371,7 +371,7 @@ We'll also add a task at the end of our role to start FRR after the configuratio
 
 ### OSPF
 
-Seeing as our goal with OSPF is exactly the same as that of our switches, it'll be no surprise that our configuration is exactly the same on each as well:
+Seeing as our goal with OSPF is very close to that of our switches, with the only addition being that we're advertising the bridge IP addressing, it'll be no surprise that our configuration is very close on each as well:
 
 <!-- {% raw %} -->
 ```jinja
@@ -387,21 +387,52 @@ interface {{ port }}
 !
 {% endfor %}
 !
+{% for bridge, address in openstack_host_network_bridges.items() | sort %}
+{% if address is not none %}
+interface {{ bridge }}
+  no link-detect
+!
+{% endif %}
+{% endfor %}
+!
 router ospf
   ospf router-id {{ openstack_host_loopback_address | ipaddr('address') }}
   network {{ openstack_host_loopback_address }} area 0.0.0.0
   passive-interface lo
+{% for bridge, address in openstack_host_network_bridges.items() | sort %}
+{% if address is not none %}
+  network {{ address | ipaddr('network/prefix') }} area 0.0.0.0
+  passive-interface {{ bridge }}
+!
+{% endif %}
+{% endfor %}
 {% endif %}
 !
 ```
 <!-- {% endraw %} -->
+
+One section of note is the following:
+
+<!-- {% raw %} -->
+```jinja
+{% for bridge, address in openstack_host_network_bridges.items() | sort %}
+{% if address is not none %}
+interface {{ bridge }}
+  no link-detect
+!
+{% endif %}
+{% endfor %}
+```
+<!-- {% endraw %} -->
+
+Because the bridge interfaces we've configured don't have any member interfaces (yet), FRR considers them as 'down'.  
+To bypass this, we need tell FRR to not care (detect) whether the link is up or down when deciding whether to advertise the associated networks.
 
 ### BGP
 
 Our BGP is going to be very similar too, with the only changes being:
 - We don't require logic to check if we need BGP because it'll be present on all (well, "both" in our lab) hosts.
 - We don't need the route reflector configuration, because we're configuring our hosts as clients only.
-- We're including the advertisement of each of our local bridge networks under the `address-family ipv4 unicast` heirachy
 
 <!-- {% raw %} -->
 ```jinja
@@ -416,15 +447,6 @@ router bgp {{ ibgp_autonomous_system }}
 {% for spine in groups['openstack_cumulus_spines'] %}
   neighbor {{ hostvars[spine].cumulus_host_loopback_address | ipaddr('address') }} peer-group iBGP-RRs
 {% endfor %}
-{# Enables advertisement of OpenStack bridges #}
-  address-family ipv4 unicast
-    neighbor iBGP-RRs activate
-{% for bridge, address in openstack_host_network_bridges.items() | sort %}
-{% if address is not none %}
-    network {{ address | ipaddr('network/prefix') }}
-{% endif %}
-{% endfor %}
-  exit-address-family
 {% if openstack_hosts_routing_bgp_evpn_enabled == true %}
 {# Enables advetisement of EVPN address family #}
   address-family l2vpn evpn
