@@ -401,6 +401,7 @@ router ospf
 Our BGP is going to be very similar too, with the only changes being:
 - We don't require logic to check if we need BGP because it'll be present on all (well, "both" in our lab) hosts.
 - We don't need the route reflector configuration, because we're configuring our hosts as clients only.
+- We're including the advertisement of each of our local bridge networks under the `address-family ipv4 unicast` heirachy
 
 <!-- {% raw %} -->
 ```jinja
@@ -415,6 +416,15 @@ router bgp {{ ibgp_autonomous_system }}
 {% for spine in groups['openstack_cumulus_spines'] %}
   neighbor {{ hostvars[spine].cumulus_host_loopback_address | ipaddr('address') }} peer-group iBGP-RRs
 {% endfor %}
+{# Enables advertisement of OpenStack bridges #}
+  address-family ipv4 unicast
+    neighbor iBGP-RRs activate
+{% for bridge, address in openstack_host_network_bridges.items() | sort %}
+{% if address is not none %}
+    network {{ address | ipaddr('network/prefix') }}
+{% endif %}
+{% endfor %}
+  exit-address-family
 {% if openstack_hosts_routing_bgp_evpn_enabled == true %}
 {# Enables advetisement of EVPN address family #}
   address-family l2vpn evpn
@@ -485,31 +495,91 @@ Codes: K - kernel route, C - connected, S - static, R - RIP,
        F - PBR,
        > - selected route, * - FIB route
 
-O>* 192.168.11.101/32 [110/200] via 192.168.11.113, enp0s8 onlink, 01:13:34
-  *                             via 192.168.11.114, enp0s9 onlink, 01:13:34
-O>* 192.168.11.102/32 [110/200] via 192.168.11.113, enp0s8 onlink, 01:13:34
-  *                             via 192.168.11.114, enp0s9 onlink, 01:13:34
-O>* 192.168.11.111/32 [110/300] via 192.168.11.113, enp0s8 onlink, 01:13:34
-  *                             via 192.168.11.114, enp0s9 onlink, 01:13:34
-O>* 192.168.11.112/32 [110/300] via 192.168.11.113, enp0s8 onlink, 01:13:34
-  *                             via 192.168.11.114, enp0s9 onlink, 01:13:34
-O>* 192.168.11.113/32 [110/100] via 192.168.11.113, enp0s8 onlink, 01:13:34
-O>* 192.168.11.114/32 [110/100] via 192.168.11.114, enp0s9 onlink, 01:13:34
-O>* 192.168.11.131/32 [110/400] via 192.168.11.113, enp0s8 onlink, 01:13:25
-  *                             via 192.168.11.114, enp0s9 onlink, 01:13:25
+O>* 192.168.11.101/32 [110/200] via 192.168.11.113, enp0s8 onlink, 00:09:45
+  *                             via 192.168.11.114, enp0s9 onlink, 00:09:45
+O>* 192.168.11.102/32 [110/200] via 192.168.11.113, enp0s8 onlink, 00:09:45
+  *                             via 192.168.11.114, enp0s9 onlink, 00:09:45
+O>* 192.168.11.111/32 [110/300] via 192.168.11.113, enp0s8 onlink, 00:09:45
+  *                             via 192.168.11.114, enp0s9 onlink, 00:09:45
+O>* 192.168.11.112/32 [110/300] via 192.168.11.113, enp0s8 onlink, 00:09:45
+  *                             via 192.168.11.114, enp0s9 onlink, 00:09:45
+O>* 192.168.11.113/32 [110/100] via 192.168.11.113, enp0s8 onlink, 00:09:45
+O>* 192.168.11.114/32 [110/100] via 192.168.11.114, enp0s9 onlink, 00:09:45
+O>* 192.168.11.131/32 [110/400] via 192.168.11.113, enp0s8 onlink, 00:09:46
+  *                             via 192.168.11.114, enp0s9 onlink, 00:09:46
 O   192.168.11.132/32 [110/0] is directly connected, lo, 01:13:49
 ```
 
 This is great. Not only can we see that we're receiving routes all the way from the other OpenStack host (192.168.11.131/32), but all of the routes are installed as ECMP routes too (indicated by the presence of two "routes" to each prefix and the asterisk at the start of each of the route lines).
 
+## BGP Testing
+
+Now that we know that we have IP connectivity to the spines/route reflectors, we shouldn't have any issues with BGP right?  
+We can confirm this from vtysh as well:
+
+```
+$ sudo vtysh
+
+Hello, this is FRRouting (version 6.0.2).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+
+vagrant# show ip bgp summary
+
+IPv4 Unicast Summary:
+BGP router identifier 192.168.11.132, local AS number 65000 vrf-id 0
+BGP table version 0
+RIB entries 11, using 1760 bytes of memory
+Peers 2, using 41 KiB of memory
+Peer groups 1, using 64 bytes of memory
+
+Neighbor        V         AS MsgRcvd MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd
+192.168.11.101  4      65000    1562    1562        0    0    0 00:10:55            3
+192.168.11.102  4      65000    1562    1562        0    0    0 00:10:55            3
+
+Total number of neighbors 2
+```
+
+Both neighbours are showing as up, which is great.
+
+We're also receiving prefixes from both peers (as indicated by the "3" under the header "State/PfxRcd").  
+We can find what these are using `show ip route bgp`:
+
+```
+vagrant# show ip route bgp
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR,
+       > - selected route, * - FIB route
+
+B>  172.16.131.0/24 [200/0] via 192.168.11.131 (recursive), 00:12:01
+  *                           via 192.168.11.113, enp0s8 onlink, 00:12:01
+  *                           via 192.168.11.114, enp0s9 onlink, 00:12:01
+B>  172.17.131.0/24 [200/0] via 192.168.11.131 (recursive), 00:12:01
+  *                           via 192.168.11.113, enp0s8 onlink, 00:12:01
+  *                           via 192.168.11.114, enp0s9 onlink, 00:12:01
+B>  172.18.131.0/24 [200/0] via 192.168.11.131 (recursive), 00:12:01
+  *                           via 192.168.11.113, enp0s8 onlink, 00:12:01
+  *                           via 192.168.11.114, enp0s9 onlink, 00:12:01
+```
+
 This is mimicked by the kernel routing table, which we can look at by using iproute2's "ip route show" command:
 
 ```bash
-ip route show
+$ ip route show
 default via 192.168.11.1 dev enp0s3 proto dhcp src 192.168.11.232 metric 100
-172.16.0.0/24 dev mgmt proto kernel scope link src 172.16.0.132 linkdown
-172.16.1.0/24 dev storage proto kernel scope link src 172.16.1.132 linkdown
-172.16.2.0/24 dev vxlan proto kernel scope link src 172.16.2.132 linkdown
+172.16.131.0/24 proto bgp metric 20
+	nexthop via 192.168.11.113 dev enp0s8 weight 1 onlink
+	nexthop via 192.168.11.114 dev enp0s9 weight 1 onlink
+172.16.132.0/24 dev mgmt proto kernel scope link src 172.16.132.1 linkdown
+172.17.131.0/24 proto bgp metric 20
+	nexthop via 192.168.11.113 dev enp0s8 weight 1 onlink
+	nexthop via 192.168.11.114 dev enp0s9 weight 1 onlink
+172.17.132.0/24 dev storage proto kernel scope link src 172.17.132.1 linkdown
+172.18.131.0/24 proto bgp metric 20
+	nexthop via 192.168.11.113 dev enp0s8 weight 1 onlink
+	nexthop via 192.168.11.114 dev enp0s9 weight 1 onlink
+172.18.132.0/24 dev vxlan proto kernel scope link src 172.18.132.1 linkdown
 192.168.11.0/24 dev enp0s3 proto kernel scope link src 192.168.11.232
 192.168.11.1 dev enp0s3 proto dhcp scope link src 192.168.11.232 metric 100
 192.168.11.101 proto ospf metric 20
@@ -530,39 +600,6 @@ default via 192.168.11.1 dev enp0s3 proto dhcp src 192.168.11.232 metric 100
 	nexthop via 192.168.11.113 dev enp0s8 weight 1 onlink
 	nexthop via 192.168.11.114 dev enp0s9 weight 1 onlink
 ```
-
-## BGP Testing
-
-Now that we know that we have IP connectivity to the spines/route reflectors, we shouldn't have any issues with BGP right?  
-We can confirm this from vtysh as well:
-
-```
-$ sudo vtysh
-
-Hello, this is FRRouting (version 6.0.2).
-Copyright 1996-2005 Kunihiro Ishiguro, et al.
-
-vagrant# show ip bgp summary
-
-IPv4 Unicast Summary:
-BGP router identifier 192.168.11.132, local AS number 65000 vrf-id 0
-BGP table version 0
-RIB entries 0, using 0 bytes of memory
-Peers 2, using 41 KiB of memory
-Peer groups 1, using 64 bytes of memory
-
-Neighbor        V         AS MsgRcvd MsgSent   TblVer  InQ OutQ  Up/Down State/PfxRcd
-192.168.11.101  4      65000    1562    1562        0    0    0 01:17:58            0
-192.168.11.102  4      65000    1562    1562        0    0    0 01:17:58            0
-
-Total number of neighbors 2
-```
-
-Both neighbours are showing as up, which is great.
-
-One thing to note is that we aren't receiving any prefixes from either peer (as indicated by the "0" under the header "State/PfxRcd").  
-Not to worry though, this is normal seeing as we aren't advertising EVPN VNI's yet.  
-This will start happening when OpenStack gets stood up and the first tenant network is created.
 
 # Conclusion
 

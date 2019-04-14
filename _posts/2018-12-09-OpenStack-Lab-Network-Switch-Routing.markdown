@@ -415,6 +415,11 @@ router bgp {{ ibgp_autonomous_system }} view iBGP-RR
 {% endfor %}
 {# Enables the BGP speaker to peer with all hosts within a network range #}
   bgp listen range {{ cumulus_spines_bgp_RR_network }} peer-group iBGP-RR-Clients
+{# Enables advertisement of OpenStack bridges #}
+  address-family ipv4 unicast
+    neighbor iBGP-RR-Clients activate
+    neighbor iBGP-RR-Clients route-reflector-client
+  exit-address-family
 {% if cumulus_routing_bgp_evpn_enabled == true %}
 {# Enables advetisement of EVPN address family #}
   address-family l2vpn evpn
@@ -453,7 +458,7 @@ The next for loop, setting the line `neighbor ... peer-group iBGP-RR-Clients`, c
 `bgp listen range` allows the BGP speakers to form peerings with any host in the defined network.  
 For this, we're referencing a new variable which will house the range that we expect the clients (OpenStack hosts) loopbacks to be inside - 192.168.11.0/24.
 
-The last lines tell the route reflectors to participate in the EVPN address family so that VXLAN information can be transferred between clients.
+The last lines tell the route reflectors to participate in the IPv4 and EVPN address family so that IP address and VXLAN information can be transferred between clients.
 
 &nbsp; <!--- Used to add a double line break --->
 
