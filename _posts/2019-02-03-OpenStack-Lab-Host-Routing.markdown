@@ -394,24 +394,27 @@ interface {{ bridge }}
 !
 {% endif %}
 {% endfor %}
+{% set host_number = (openstack_host_loopback_address | ipaddr('address')).split('.')[3] %}
 !
 router ospf
   ospf router-id {{ openstack_host_loopback_address | ipaddr('address') }}
-  network {{ openstack_host_loopback_address }} area 0.0.0.0
+  network {{ openstack_host_loopback_address }} area 0
   passive-interface lo
 {% for bridge, address in openstack_host_network_bridges.items() | sort %}
 {% if address is not none %}
-  network {{ address | ipaddr('network/prefix') }} area 0.0.0.0
+  network {{ address | ipaddr('network/prefix') }} area {{ host_number }}
   passive-interface {{ bridge }}
-!
 {% endif %}
 {% endfor %}
+  area {{ host_number }} range 10.{{ host_number }}.0.0/16
 {% endif %}
 !
 ```
 <!-- {% endraw %} -->
 
-One section of note is the following:
+&nbsp; <!--- Used to add a double line break --->
+
+I'll cover some sections of note.
 
 <!-- {% raw %} -->
 ```jinja
@@ -425,8 +428,20 @@ interface {{ bridge }}
 ```
 <!-- {% endraw %} -->
 
-Because the bridge interfaces we've configured don't have any member interfaces (yet), FRR considers them as 'down'.  
+FRR considers the bridge interfaces we've configured as 'down', because don't have any member interfaces (yet).  
 To bypass this, we need tell FRR to not care (detect) whether the link is up or down when deciding whether to advertise the associated networks.
+
+<!-- {% raw %} -->
+```jinja
+{% set host_number = (openstack_host_loopback_address | ipaddr('address')).split('.')[3] %}
+...
+  area {{ host_number }} range 10.{{ host_number }}.0.0/16
+```
+<!-- {% endraw %} -->
+
+Because we've addressed our bridge interfaces in such a way that they can be summarised on each host, we can use the `area x range 10.x.0.0/16` command.  
+This will tell the host to send out a summary route (/16) instead of individual routes.  
+To determine how to summarise, we take the take octet of the loopback address and set this to a variable in the Jinja2 template using `{% set %}`
 
 ### BGP
 

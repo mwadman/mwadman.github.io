@@ -236,9 +236,9 @@ Here’s what I've added to “/etc/ansible/host_vars/openstack-compute/vars.yml
 
 ```yaml
 openstack_host_network_bridges:
-  mgmt: "172.16.131.1/24"
-  storage: "172.17.131.1/24"
-  vxlan: "172.18.131.1/24"
+  mgmt: "10.131.16.1/24"
+  storage: "10.131.17.1/24"
+  vxlan: "10.131.18.1/24"
   vlan:
 ```
 
