@@ -441,7 +441,7 @@ To bypass this, we need tell FRR to not care (detect) whether the link is up or 
 
 Because we've addressed our bridge interfaces in such a way that they can be summarised on each host, we can use the `area x range 10.x.0.0/16` command.  
 This will tell the host to send out a summary route (/16) instead of individual routes.  
-To determine how to summarise, we take the take octet of the loopback address and set this to a variable in the Jinja2 template using `{% set %}`
+To determine how to summarise, we take the take octet of the loopback address and set this to a variable using Jinja2's `set` command.
 
 ### BGP
 
