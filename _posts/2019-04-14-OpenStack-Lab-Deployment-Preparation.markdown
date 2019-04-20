@@ -158,12 +158,14 @@ We need to save this off again, as the "register" action only saves the variable
 
 The last step for the deployment host is to run the bootstrap script that was cloned in the step before.
 
+<!-- {% raw %} -->
 ```yaml
 - name: Run bootstrap-ansible.sh script
   command: ./scripts/bootstrap-ansible.sh
   args:
     chdir: "{{ openstack_ansible_exec_dir }}"
 ```
+<!-- {% endraw %} -->
 
 ## Target Hosts
 
