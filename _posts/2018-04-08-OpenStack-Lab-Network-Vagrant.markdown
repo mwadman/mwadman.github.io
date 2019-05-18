@@ -357,6 +357,15 @@ For example, to configure the link between the first spine and leaf switches, we
 
 Note that the double underscore [isn't a typo.](https://www.vagrantup.com/docs/virtualbox/networking.html)
 
+## Nested Virtualisation
+
+Because our OpenStack hosts will themselves have virtual machines running on them, we need to pass the relevant CPU flags to the hosts in Virtualbox.  
+This is done by enabling the `--nested-hw-virt` customization in Virtualbox for each of the machines.
+
+```ruby
+      vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
+```
+
 ## Storage
 
 The final touch to our Vagrantfile will be adding a second disk to each of the OpenStack hosts, to be used as extra space for OpenStack services.
@@ -365,16 +374,17 @@ This will be done using some more `customize` commands.
 Let's take a look at the snippet for the control host:
 
 ```ruby
-file_to_disk = 'control_disk2.vdi'
-unless File.exist?(file_to_disk)
-  vb.customize ['createhd', '--filename', file_to_disk, '--size', 50 * 1024]
-end
-vb.customize ['storageattach', :id, '--storagectl', 'IDE Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_to_disk]
+      file_to_disk = 'control_disk2.vdi'
+      unless File.exist?(file_to_disk)
+        vb.customize ['createhd', '--filename', file_to_disk, '--size', 50 * 1024]
+      end
+      vb.customize ['storageattach', :id, '--storagectl', 'IDE Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_to_disk]
 ```
 
 In the first line we define a variable to be used in the configuration lines coming next.  
 Then we check for the existence of the disk, because we don't want to create it if it already exists.  
 Then, in the `customize` commands, we create the disk file and then attach it to the machine.
+
 
 # Conclusion
 
