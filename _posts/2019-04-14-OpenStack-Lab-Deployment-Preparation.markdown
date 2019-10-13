@@ -24,7 +24,7 @@ In this post, we'll start making the final touches before we run OpenStack-Ansib
 
 # Configuration
 
-This post will be a quick one, with the goal of completing the remaining preparation steps required before we can run the OpenStack-Ansible playbooks.
+This post will be a quick one, with the goal of preparating our OpenStack hosts for the OpenStack services to be deployed to them.
 
 The steps that I'm going to cover will be a direct translation of what is listed in OpenStack-Ansible's deployment guide. Specifically, the following pages:
 - [OpenStack-Ansible: Prepare the deployment host](https://docs.openstack.org/project-deploy-guide/openstack-ansible/latest/deploymenthost.html)
@@ -164,8 +164,12 @@ The last step for the deployment host is to run the bootstrap script that was cl
   command: ./scripts/bootstrap-ansible.sh
   args:
     chdir: "{{ openstack_ansible_exec_dir }}"
+    creates: "/usr/local/bin/openstack-ansible"
 ```
 <!-- {% endraw %} -->
+
+The `creates` argument is a way of telling the task whether it needs to be run or not, by saying what file is created if it has been run successfully.  
+I've used the file "/usr/local/bin/openstack-ansible" as this is the last (we want the creation of the file to be as near to the end of the script as possible) file that is always created when the script is run.
 
 ## Target Hosts
 
@@ -309,8 +313,8 @@ In the next post, we'll go over the configuration of OpenStack-Ansible.
 [Ansible - "authorized_key" module](https://docs.ansible.com/ansible/devel/modules/authorized_key_module.html)  
 [Ansible - "parted" module](https://docs.ansible.com/ansible/latest/modules/parted.html)  
 [Ansible - "lvg" module](https://docs.ansible.com/ansible/latest/modules/lvg.html)  
-[OpenStack-Ansible: Prepare the deployment host](https://docs.openstack.org/project-deploy-guide/openstack-ansible/latest/deploymenthost.html)  
-[OpenStack-Ansible: Prepare the target hosts](https://docs.openstack.org/project-deploy-guide/openstack-ansible/latest/targethosts.html)  
+[OpenStack-Ansible - Prepare the deployment host](https://docs.openstack.org/project-deploy-guide/openstack-ansible/latest/deploymenthost.html)  
+[OpenStack-Ansible - Prepare the target hosts](https://docs.openstack.org/project-deploy-guide/openstack-ansible/latest/targethosts.html)  
 
 ## Versions used:
 
