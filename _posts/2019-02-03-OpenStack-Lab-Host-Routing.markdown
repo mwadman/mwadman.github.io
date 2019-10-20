@@ -466,6 +466,7 @@ router bgp {{ ibgp_autonomous_system }}
 {# Enables advetisement of EVPN address family #}
   address-family l2vpn evpn
     neighbor iBGP-RRs activate
+    advertise-all-vni
   exit-address-family
 {% endif %}
 {% endif %}
