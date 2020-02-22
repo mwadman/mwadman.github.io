@@ -123,7 +123,7 @@ Our "tasks/"main.yml" file ends up looking like the below for this role:
   template:
     src: "{{ item }}.j2"
     dest: "{{ cumulus_frr_config_dir }}{{ item }}"
-  with_items:
+  loop:
     - daemons
     - frr.conf
   notify: Reload FRR

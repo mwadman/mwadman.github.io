@@ -279,7 +279,7 @@ We'll be utilising the second hard disk that we set up on both of our OpenStack 
     part_end: "{{ item.part_end }}"
     label: gpt
     flags: [ lvm ]
-  with_items:
+  loop:
     - { name: cinder-volumes, number: 1, part_start: '0%', part_end: '50%' }
     - { name: lxc, number: 2, part_start: '50%', part_end: '100%' }
 
@@ -288,7 +288,7 @@ We'll be utilising the second hard disk that we set up on both of our OpenStack 
     vg: "{{ item.vg }}"
     pvs: "{{ item.pvs }}"
     vg_options: --metadatasize 2048
-  with_items:
+  loop:
     - { vg: cinder-volumes, pvs: /dev/sdb1 }
     - { vg: lxc, pvs: /dev/sdb2 }
 ```

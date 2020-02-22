@@ -99,7 +99,7 @@ We're also going to delete the default 'html' directory that nginx creates on in
   file:
     path: "{{ item }}"
     state: absent
-  with_items:
+  loop:
     - "/etc/nginx/sites-enabled/default"
     - "/var/www/html"
   notify: Restart nginx

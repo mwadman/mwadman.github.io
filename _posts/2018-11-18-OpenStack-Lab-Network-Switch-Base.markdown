@@ -82,7 +82,7 @@ I'm just going to install some troubleshooting packages, "bwm-ng" and "mtr", but
     name: "{{ item.name }}"
     state: "{{ item.state }}"
     cache_valid_time: 900
-  with_items:
+  loop:
     - { name: bwm-ng, state: latest }
     - { name: mtr, state: latest }
   tags:
