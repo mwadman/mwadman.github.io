@@ -48,15 +48,21 @@ With that in mind, let's create a new role and add this to our existing playbook
   become: true
   gather_facts: true
   roles:
-    - { role: openstack-interfaces, tags: [ 'openstack-interfaces' ] }
-    - { role: openstack-routing, tags: [ 'openstack-routing' ] }
+    - role: openstack-interfaces
+      tags:
+        - openstack-interfaces
+    - role: openstack-routing
+      tags:
+        - openstack-routing
 
 - name: Prepare deployment host
   hosts: openstack-control
   become: true
   gather_facts: true
   roles:
-    - { role: openstack-deployment, tags: [ 'openstack-deployment' ] }
+    - role: openstack-deployment
+      tags:
+        - openstack-deployment
 ```
 
 Note that instead of adding this role onto the existing "Configuring OpenStack hosts" entry, I've defined another entry.  
@@ -186,22 +192,30 @@ We'll add our new role to the playbook first:
   become: true
   gather_facts: true
   roles:
-    - { role: openstack-interfaces, tags: [ 'openstack-interfaces' ] }
-    - { role: openstack-routing, tags: [ 'openstack-routing' ] }
+    - role: openstack-interfaces
+      tags:
+        - openstack-interfaces
+    - role: openstack-routing
+      tags:
+        - openstack-routing
 
 - name: Prepare deployment host
   hosts: openstack-control
   become: true
   gather_facts: true
   roles:
-    - { role: openstack-deployment, tags: [ 'openstack-deployment' ] }
+    - role: openstack-deployment
+      tags:
+        - openstack-deployment
 
 - name: Configuring OpenStack hosts
   hosts: openstack_hosts
   become: true
   gather_facts: true
   roles:
-    - { role: openstack-preparation, tags: [ 'openstack-preparation' ] }
+    - role: openstack-preparation
+      tags:
+        - openstack-preparation
 ```
 
 And our role creation.
@@ -280,8 +294,14 @@ We'll be utilising the second hard disk that we set up on both of our OpenStack 
     label: gpt
     flags: [ lvm ]
   loop:
-    - { name: cinder-volumes, number: 1, part_start: '0%', part_end: '50%' }
-    - { name: lxc, number: 2, part_start: '50%', part_end: '100%' }
+    - name: cinder-volumes
+      number: 1
+      part_start: '0%'
+      part_end: '50%'
+    - name: lxc
+      number: 2
+      part_start: '50%'
+      part_end: '100%'
 
 - name: Create required LVM volume groups
   lvg:
@@ -289,8 +309,10 @@ We'll be utilising the second hard disk that we set up on both of our OpenStack 
     pvs: "{{ item.pvs }}"
     vg_options: --metadatasize 2048
   loop:
-    - { vg: cinder-volumes, pvs: /dev/sdb1 }
-    - { vg: lxc, pvs: /dev/sdb2 }
+    - vg: cinder-volumes
+      pvs: /dev/sdb1
+    - vg: lxc
+      pvs: /dev/sdb2
 ```
 <!-- {% endraw %} -->
 

@@ -44,8 +44,12 @@ This role I'll call "nginx-ztp":
   become: true
   gather_facts: true
   roles:
-    - { role: isc-dhcp, tags: [ 'isc-dhcp' ] }
-    - { role: nginx-ztp, tags: [ 'nginx-ztp' ] }
+    - role: isc-dhcp
+      tags:
+        - isc-dhcp
+    - role: nginx-ztp
+      tags:
+        - nginx-ztp
 ```
 
 ### Ansible Role

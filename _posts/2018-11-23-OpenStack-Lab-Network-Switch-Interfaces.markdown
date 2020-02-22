@@ -63,8 +63,12 @@ And adding this to our playbook - "openstack-cumulus.yml":
   become: true
   gather_facts: true
   roles:
-    - { role: cumulus-base, tags: [ 'cumulus-because' ] }
-    - { role: cumulus-interface, tags: [ 'cumulus-interface' ] }
+    - role: cumulus-base
+      tags:
+        - cumulus-base
+    - role: cumulus-interface
+      tags:
+        - cumulus-interface
 ```
 
 &nbsp; <!--- Used to add a double line break --->

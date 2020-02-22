@@ -46,8 +46,12 @@ Let's start with our playbook.
   become: true
   gather_facts: true
   roles:
-    - { role: openstack-interfaces, tags: [ 'openstack-interfaces' ] }
-    - { role: openstack-routing, tags: [ 'openstack-routing' ] }
+    - role: openstack-interfaces
+      tags:
+        - openstack-interfaces
+    - role: openstack-routing
+      tags:
+        - openstack-routing
 ```
 
 And our role creation.

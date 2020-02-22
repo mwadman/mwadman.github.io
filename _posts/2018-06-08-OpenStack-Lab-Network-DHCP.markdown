@@ -250,7 +250,9 @@ Under this directory I'm creating a new file named "openstack_ztp.yml", with the
   become: true
   gather_facts: true
   roles:
-    - { role: isc-dhcp, tags: [ 'isc-dhcp' ] }
+    - role: isc-dhcp
+      tags:
+        - isc-dhcp
 ```
 
 I've named the `role: isc-dhcp`, as we're going to be implementing ZTP (and DHCP) using the isc-dhcp-server package on Ubuntu.

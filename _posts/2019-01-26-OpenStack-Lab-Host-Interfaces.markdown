@@ -44,7 +44,9 @@ Because we're no longer working with our Cumulus switches and instead on our Ope
   become: true
   gather_facts: true
   roles:
-    - { role: openstack-interfaces, tags: [ 'openstack-interfaces' ] }
+    - role: openstack-interfaces
+      tags:
+        - openstack-interfaces
 ```
 
 ## Ansible Role

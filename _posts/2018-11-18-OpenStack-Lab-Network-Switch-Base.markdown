@@ -47,7 +47,9 @@ In the directory "/etc/ansible/playbooks/" I'm creating another file, this time 
   become: true
   gather_facts: true
   roles:
-    - { role: cumulus-base, tags: [ 'cumulus-because' ] }
+    - role: cumulus-base
+      tags:
+        - cumulus-because
 ```
 
 Super simple. We want to run a single role ("cumulus-base", which we'll create next) on all of our switches to configure them.
@@ -83,8 +85,10 @@ I'm just going to install some troubleshooting packages, "bwm-ng" and "mtr", but
     state: "{{ item.state }}"
     cache_valid_time: 900
   loop:
-    - { name: bwm-ng, state: latest }
-    - { name: mtr, state: latest }
+    - name: bwm-ng
+      state: latest
+    - name: mtr
+      state: latest
   tags:
     - packages
 ```
