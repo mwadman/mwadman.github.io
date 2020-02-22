@@ -23,7 +23,7 @@ This post is the ninth in a series that plans to document my progress through in
 
 For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
-In the last post, we configured the network interfaces on our OpenStack hosts.
+In the [last post](https://wadman.co.nz/2019/01/26/OpenStack-Lab-Host-Interfaces/), we configured the network interfaces on our OpenStack hosts.
 In this post, we'll cover the installation and configuration of our routing protocol suite, Free Range Routing (FRR), on our OpenStack hosts.
 
 # Configuration
@@ -643,7 +643,7 @@ default via 192.168.11.1 dev enp0s3 proto dhcp src 192.168.11.232 metric 100
 
 In this post, we covered how to set up FRR on our OpenStack hosts in preparation of them advertising their VXLAN networks to each other.  
 
-In the next post, we'll be preparing our hosts for deployment of OpenStack-Ansible.
+In the [next post](https://wadman.co.nz/2019/04/14/OpenStack-Lab-Deployment-Preparation/), we'll be preparing our hosts for deployment of OpenStack-Ansible.
 
 ## References:
 

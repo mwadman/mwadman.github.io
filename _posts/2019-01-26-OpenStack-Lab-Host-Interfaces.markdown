@@ -20,7 +20,7 @@ This post is the eighth in a series that plans to document my progress through i
 
 For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
-In the last post, we covered the routing configuration on our Cumulus switches.  
+In the [last post](https://wadman.co.nz/2018/12/09/OpenStack-Lab-Network-Switch-Routing/), we covered the routing configuration on our Cumulus switches.  
 In this post, we'll go over the network interface configuration that our OpenStack hosts require in order to participate in the network that we have set up for them.
 
 # Configuration
@@ -380,7 +380,7 @@ This command shows us each interface present and its' associated IP address.
 
 In this post, we covered some basic network interface configuration on our OpenStack hosts, including the bridges that OpenStack-Ansible needs present.
 
-In the next post, we'll build on top of this configuration by bringing up OSPF and iBGP.
+In the [next post](https://wadman.co.nz/2019/02/03/OpenStack-Lab-Host-Routing/), we'll build on top of this configuration by bringing up OSPF and iBGP.
 
 ## References:
 

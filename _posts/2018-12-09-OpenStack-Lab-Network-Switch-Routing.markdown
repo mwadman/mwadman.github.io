@@ -23,7 +23,7 @@ This post is the seventh in a series that plans to document my progress through 
 
 For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
-In the last post, we covered some basic configuration of interfaces on a Cumulus switch.  
+In the [last post](https://wadman.co.nz/2018/11/23/OpenStack-Lab-Network-Switch-Interfaces/), we covered some basic configuration of interfaces on a Cumulus switch.  
 This post will cover the last of our configuration required on our Cumulus switches - routing.
 
 # Configuration
@@ -667,7 +667,7 @@ We'll cover some good BGP (and EVPN) checks in a later post where we configure F
 
 In this (quite lengthy - sorry!) post, we've configured the routing protocols needed for our Cumulus switches to support the OpenStack network.
 
-In the next post, I'll start to dive into the network interface configuration required on our OpenStack hosts, before following up with the routing configuration using FRR.
+In the [next post](https://wadman.co.nz/2019/01/26/OpenStack-Lab-Host-Interfaces/), I'll start to dive into the network interface configuration required on our OpenStack hosts, before following up with the routing configuration using FRR.
 
 ## References:
 

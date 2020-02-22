@@ -20,7 +20,7 @@ This post is the fourth in a series that plans to document my progress through i
 
 For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
-In the last post, we configured the DHCP part of the ZTP server.
+In the [last post](https://wadman.co.nz/2018/06/08/OpenStack-Lab-Network-DHCP/), we configured the DHCP part of the ZTP server.
 This post will cover the installation of the HTTP server part on the ZTP server using Ansible.
 
 # Configuration
@@ -378,7 +378,7 @@ openstack-control | SUCCESS => {
 In this post we've covered how to write a ztp script for Cumulus Linux devices, and the configuration of a (very) simple web server to serve this to the switches as they boot.  
 We would now be able to run `vagrant up` and all hosts (including the Ubuntu hosts for OpenStack) would get an address via DHCP and the Cumulus Switches would also be updated on top of that.
 
-In the next post, I'll move onto the base configuration of the Cumulus switches using Ansible.
+In the [next post](https://wadman.co.nz/2018/11/18/OpenStack-Lab-Network-Switch-Base/), I'll move onto the base configuration of the Cumulus switches using Ansible.
 
 ## References:
 

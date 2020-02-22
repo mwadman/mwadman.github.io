@@ -21,19 +21,19 @@ tags:
 
 This post is the first in a series that plans to document my progress through installing and configuring an OpenStack Lab, focusing predominantly on the configuration of the network components.
 
-The series will roughly look like the following:
+The series looks like the following:
 1. [Setup VirtualBox and virtual machines using Vagrant.](https://wadman.co.nz/2018/04/08/OpenStack-Lab-Network-Vagrant/)
 2. Install and configure ZTP server and boot switches.
   * [Part 1 - DHCP](https://wadman.co.nz/2018/06/08/OpenStack-Lab-Network-DHCP/)
   * [Part 2 - HTTP](https://wadman.co.nz/2018/08/03/OpenStack-Lab-Network-HTTP/)
 3. Configure network switches using Ansible
-  * [Part 1 - Base Switch Configuration](https://wadman.co.nz/2018/11/18/OpenStack-Lab-Network-Switch-Base/)
-  * [Part 2 - Interface Configuration](https://wadman.co.nz/2018/11/23/OpenStack-Lab-Network-Switch-Interfaces/)
-  * [Part 3 - Routing Configuration](https://wadman.co.nz/2018/12/09/OpenStack-Lab-Network-Switch-Routing/)
+  * [Part 1 - Switch Base Configuration](https://wadman.co.nz/2018/11/18/OpenStack-Lab-Network-Switch-Base/)
+  * [Part 2 - Switch Interface Configuration](https://wadman.co.nz/2018/11/23/OpenStack-Lab-Network-Switch-Interfaces/)
+  * [Part 3 - Switch Routing Configuration](https://wadman.co.nz/2018/12/09/OpenStack-Lab-Network-Switch-Routing/)
 4. Configure network overlay (VXLAN with EVPN) using Ansible.
-5. Deployment of OpenStack servers using OpenStack-Ansible
-
-If you're reading this sentence, the above is subject to change as I haven't yet written all posts yet.
+  * [Part 1 - Host Interface Configuration](https://wadman.co.nz/2019/01/26/OpenStack-Lab-Host-Interfaces/)
+  * [Part 2 - Host Routing Configuration](https://wadman.co.nz/2019/02/03/OpenStack-Lab-Host-Routing/)
+5. [Deployment of OpenStack servers using OpenStack-Ansible](https://wadman.co.nz/2019/04/14/OpenStack-Lab-Deployment-Preparation/)
 
 # Subject
 

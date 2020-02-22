@@ -20,7 +20,7 @@ This post is the sixth in a series that plans to document my progress through in
 
 For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
-In the last post, we finished the base configuration of our Cumulus switches using Ansible.
+In the [last post](https://wadman.co.nz/2018/11/18/OpenStack-Lab-Network-Switch-Base/), we finished the base configuration of our Cumulus switches using Ansible.
 This post will cover the configuration of network interfaces on Cumulus switches.
 
 # Configuration
@@ -375,7 +375,7 @@ As this is a lab, where I might be changing connections at any time, I'm going t
 
 In this post, I covered some basic configuration of interfaces on a Cumulus switch.
 
-In the next post, I'll start to dive into the routing configuration required for our OpenStack deployment.
+In the [next post](https://wadman.co.nz/2018/12/09/OpenStack-Lab-Network-Switch-Routing/), I'll start to dive into the routing configuration required for our OpenStack deployment.
 
 ## References:
 

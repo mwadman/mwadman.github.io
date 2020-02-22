@@ -391,7 +391,7 @@ Then, in the `customize` commands, we create the disk file and then attach it to
 With this configuration file we have configured Vagrant to provision all our VM's with the correct interface-to-adapter mappings.
 
 While we could run `vagrant up` to ask Vagrant to provision and turn on the VM's, Vagrant won't finish as it will not be able to reach the hosts.  
-Before it can do so, we need to configure a DHCP server to hand out addresses, which I'll cover in the next post.
+Before it can do so, we need to configure a DHCP server to hand out addresses, which I'll cover in [the next post](https://wadman.co.nz/2018/06/08/OpenStack-Lab-Network-DHCP/).
 
 ## References:
 

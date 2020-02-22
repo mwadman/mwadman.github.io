@@ -19,7 +19,7 @@ This post is the tenth in a series that plans to document my progress through in
 
 For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
-In the last post, we installed and configured the FRR suite on our OpenStack hosts.
+In the [last post](https://wadman.co.nz/2019/02/03/OpenStack-Lab-Host-Routing/), we installed and configured the FRR suite on our OpenStack hosts.
 In this post, we'll start making the final touches before we run OpenStack-Ansible.
 
 # Configuration
@@ -300,8 +300,6 @@ Next, we create LVM volume groups using the ["lvg"](https://docs.ansible.com/ans
 # Conclusion
 
 In this post, we've completed the final preparation steps (a bit of an oxymoron, I know) required on our OpenStack hosts.
-
-In the next post, we'll go over the configuration of OpenStack-Ansible.
 
 ## References:
 

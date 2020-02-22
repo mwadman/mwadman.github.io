@@ -20,7 +20,7 @@ This post is the third in a series that plans to document my progress through in
 
 For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
-In the last post, we covered how to provision the switches and servers using Vagrant.
+In the [last post](https://wadman.co.nz/2018/04/08/OpenStack-Lab-Network-Vagrant/), we covered how to provision the switches and servers using Vagrant.
 This post will cover the installation of the DHCP part on the ZTP server using Ansible.
 
 # Setup
@@ -465,7 +465,7 @@ We've now booted, set an IP, and configured DHCP on the ZTP server.
 We could boot our OpenStack servers now and they would be ready to configure themselves using Ansible.
 If we booted our Cumulus switches, they would get an IP address and know where to look for their ZTP script - but wouldn't find any script file at the location http://192.168.11.221/cumulus_ztp.sh.
 
-In the next post, I'll cover the configuration of NGINX to serve this file to the switches so that we can finally boot them fully.
+In the [next post](https://wadman.co.nz/2018/08/03/OpenStack-Lab-Network-HTTP/), I'll cover the configuration of NGINX to serve this file to the switches so that we can finally boot them fully.
 
 ## References:
 

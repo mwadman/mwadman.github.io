@@ -20,7 +20,7 @@ This post is the fifth in a series that plans to document my progress through in
 
 For other posts in this series, see the overview section of the [introduction post](https://www.wadman.co.nz/2018/02/08/OpenStack-Lab-Network-Introduction/#overview).
 
-In the last post, we configured the HTTP part of the ZTP server and then showed that we were able to bring everything up with Vagrant.
+In the [last post](https://wadman.co.nz/2018/08/03/OpenStack-Lab-Network-HTTP/), we configured the HTTP part of the ZTP server and then showed that we were able to bring everything up with Vagrant.
 This post will cover the base configuration of the Cumulus switches using Ansible.
 
 # Configuration
@@ -334,7 +334,7 @@ The only thing to note here is that we also need to use `ansible.limit` to speci
 
 In this post I started an Ansible playbook to configure some basic functions on Cumulus hosts and covered how to include this in our Vagrantfile.
 
-In the next post, I'll dive into the network interface configuration of the switches, including LLDP and PTMD (I'll cover what PTMD is as well) configuration on Cumulus.
+In the [next post](https://wadman.co.nz/2018/11/23/OpenStack-Lab-Network-Switch-Interfaces/), I'll dive into the network interface configuration of the switches, including LLDP and PTMD (I'll cover what PTMD is as well) configuration on Cumulus.
 
 ## References:
 
