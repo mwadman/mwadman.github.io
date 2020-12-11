@@ -32,10 +32,10 @@ First up is installing python and pip, both of which are done through apt:
 $ sudo apt-get install python3 python3-pip
 ```
 
-Next is installing virtualenv using pip. This should be the only pip package you install globally (using sudo):
+Next is installing virtualenv using pip. We'll install this only for our user, so we don't need to use `sudo`:
 
 ```bash
-$ sudo pip3 install virtualenv
+$ pip3 install --user virtualenv
 ```
 
 # Using Virtualenv
